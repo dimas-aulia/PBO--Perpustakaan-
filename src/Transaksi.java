@@ -37,4 +37,23 @@ public class Transaksi {
             System.out.println("ID Transaksi tidak ditemukan!");
         }
     }
+    public void tampilRiwayat() {
+
+        if (riwayat.isEmpty()) {
+            System.out.println("Belum ada transaksi.");
+            return;
+        }
+
+        System.out.println("\n===== RIWAYAT TRANSAKSI =====");
+
+        for (TransaksiItem t : riwayat) {
+            System.out.println(
+                    t.idTransaksi + " | " +
+                            t.anggota.nama + " | " +
+                            t.buku.getJudul() + " | " +
+                            (t.statusDipinjam ? "Dipinjam" : "Dikembalikan")
+            );
+        }
+    }
+}
 }

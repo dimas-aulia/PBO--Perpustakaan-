@@ -127,6 +127,9 @@ public class Main {
                     String idTK = sc.nextLine();
                     transaksi.kembaliBuku(idTK);
                     break;
+                case 9:
+                    transaksi.tampilRiwayat();
+                    break;
                 case 0:
                     System.out.println("Keluar program...");
                     break;
