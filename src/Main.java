@@ -121,7 +121,12 @@ public class Main {
 
                     transaksi.pinjamBuku(idT, foundA, foundB);
                     break;
-
+                case 8:
+                    System.out.println("\n--- KEMBALIKAN BUKU ---");
+                    System.out.print("ID Transaksi : ");
+                    String idTK = sc.nextLine();
+                    transaksi.kembaliBuku(idTK);
+                    break;
                 case 0:
                     System.out.println("Keluar program...");
                     break;
