@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-    //halo
+    //
         Scanner sc = new Scanner(System.in);
 
         ArrayList<Buku> daftarBuku = new ArrayList<>();
