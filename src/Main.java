@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
+        Transaksi transaksi = new Transaksi();
 
         ArrayList<Buku> daftarBuku = new ArrayList<>();
         ArrayList<Anggota> daftarAnggota = new ArrayList<>();
@@ -81,6 +82,47 @@ public class Main {
                 case 6:
                     System.out.println("\n--- Daftar Petugas ---");
                     for (Petugas p : daftarPetugas) p.tampilkanInfo();
+                    break;
+
+                case 7:
+                    System.out.println("\n--- PINJAM BUKU ---");
+
+                    System.out.print("ID Transaksi : ");
+                    String idT = sc.nextLine();
+
+                    System.out.print("ID Anggota   : ");
+                    String idAng = sc.nextLine();
+
+                    Anggota foundA = null;
+                    for (Anggota a : daftarAnggota) {
+                        if (a.idUser.equals(idAng)) {
+                            foundA = a;
+                            break;
+                        }
+                    }
+
+                    if (foundA == null) {
+                        System.out.println("Anggota tidak ditemukan!");
+                        break;
+                    }
+
+                    System.out.print("ID Buku : ");
+                    String idBuku = sc.nextLine();
+
+                    Buku foundB = null;
+                    for (Buku b : daftarBuku) {
+                        if (b.getIdBuku().equals(idBuku)) {
+                            foundB = b;
+                            break;
+                        }
+                    }
+
+                    if (foundB == null) {
+                        System.out.println("Buku tidak ditemukan!");
+                        break;
+                    }
+
+                    transaksi.pinjamBuku(idT, foundA, foundB);
                     break;
 
                 case 0:
