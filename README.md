@@ -1,2 +1,7 @@
 # Projek Perpustakaan
-Ini adalah prepo yang berisi projek Java GUI tentang perpustakaan!
+
+DAFTAR  CLASS :
+1. CLASS PENGGUNAPERPUSATKAAN
+2. CLASS BUKU
+3. CLASS ANGGOTA
+4. CLASS PETUGAS
