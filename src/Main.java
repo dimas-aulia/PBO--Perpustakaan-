@@ -1,9 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
-// ini tes nambah teks biasa
-//okeyy faris ganteng
 public class Main {
     public static void main(String[] args) {
 
