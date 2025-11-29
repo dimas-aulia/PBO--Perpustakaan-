@@ -2,23 +2,35 @@ import java.util.ArrayList;
 
 public class Transaksi {
 
-    private ArrayList<TransaksiItem> riwayat = new ArrayList<>();
+    private class Item {
+        String idTransaksi;
+        Anggota anggota;
+        Buku buku;
+        boolean statusDipinjam;
 
-    // =======================================
-    // 1. FUNGSI PINJAM BUKU
-    // =======================================
+        Item(String idTransaksi, Anggota anggota, Buku buku) {
+            this.idTransaksi = idTransaksi;
+            this.anggota = anggota;
+            this.buku = buku;
+            this.statusDipinjam = true;
+        }
+    }
+
+    private ArrayList<Item> riwayat = new ArrayList<>();
+
     public void pinjamBuku(String idT, Anggota a, Buku b) {
-        
-        TransaksiItem t = new TransaksiItem(idT, a, b);
+
+        Item t = new Item(idT, a, b);
         riwayat.add(t);
 
         System.out.println("Buku \"" + b.getJudul() + "\" dipinjam oleh " + a.nama);
     }
+
     public void kembaliBuku(String idT) {
 
         boolean ditemukan = false;
 
-        for (TransaksiItem t : riwayat) {
+        for (Item t : riwayat) {
             if (t.idTransaksi.equals(idT)) {
 
                 if (t.statusDipinjam) {
@@ -37,6 +49,7 @@ public class Transaksi {
             System.out.println("ID Transaksi tidak ditemukan!");
         }
     }
+    
     public void tampilRiwayat() {
 
         if (riwayat.isEmpty()) {
@@ -46,7 +59,7 @@ public class Transaksi {
 
         System.out.println("\n===== RIWAYAT TRANSAKSI =====");
 
-        for (TransaksiItem t : riwayat) {
+        for (Item t : riwayat) {
             System.out.println(
                     t.idTransaksi + " | " +
                             t.anggota.nama + " | " +
@@ -55,5 +68,4 @@ public class Transaksi {
             );
         }
     }
-}
 }

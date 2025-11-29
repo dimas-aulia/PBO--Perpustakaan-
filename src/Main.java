@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-//tws
         Scanner sc = new Scanner(System.in);
         Transaksi transaksi = new Transaksi();
 
@@ -21,6 +20,9 @@ public class Main {
             System.out.println("4. Lihat Buku");
             System.out.println("5. Lihat Anggota");
             System.out.println("6. Lihat Petugas");
+            System.out.println("7. Pinjam Buku");
+            System.out.println("8. Kembalikan Buku");
+            System.out.println("9. Tampil Riwayat Transaksi");
             System.out.println("0. Keluar");
             System.out.print("Pilih: ");
             pilih = sc.nextInt();
@@ -33,7 +35,6 @@ public class Main {
                     String idB = sc.nextLine();
                     System.out.print("Judul   : ");
                     String judul = sc.nextLine();
-
                     daftarBuku.add(new Buku(idB, judul));
                     System.out.println("Buku berhasil ditambahkan!");
                     break;
@@ -47,7 +48,6 @@ public class Main {
                     String telA = sc.nextLine();
                     System.out.print("Jurusan    : ");
                     String jurusanA = sc.nextLine();
-
                     daftarAnggota.add(new Anggota(idA, namaA, telA, jurusanA));
                     System.out.println("Anggota berhasil ditambahkan!");
                     break;
@@ -61,7 +61,6 @@ public class Main {
                     String telP = sc.nextLine();
                     System.out.print("Shift      : ");
                     String shiftP = sc.nextLine();
-
                     daftarPetugas.add(new Petugas(idP, namaP, telP, shiftP));
                     System.out.println("Petugas berhasil ditambahkan!");
                     break;
@@ -121,15 +120,18 @@ public class Main {
 
                     transaksi.pinjamBuku(idT, foundA, foundB);
                     break;
+
                 case 8:
                     System.out.println("\n--- KEMBALIKAN BUKU ---");
                     System.out.print("ID Transaksi : ");
                     String idTK = sc.nextLine();
                     transaksi.kembaliBuku(idTK);
                     break;
+
                 case 9:
                     transaksi.tampilRiwayat();
                     break;
+
                 case 0:
                     System.out.println("Keluar program...");
                     break;
@@ -139,6 +141,5 @@ public class Main {
             }
 
         } while (pilih != 0);
-
     }
 }
