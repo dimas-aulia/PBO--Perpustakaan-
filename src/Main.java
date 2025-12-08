@@ -1,14 +1,14 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         Transaksi transaksi = new Transaksi();
 
-        ArrayList<Buku> daftarBuku = new ArrayList<>();
-        ArrayList<Anggota> daftarAnggota = new ArrayList<>();
-        ArrayList<Petugas> daftarPetugas = new ArrayList<>();
+        Buku buku = null;
+        Anggota anggota = null;
+        Petugas petugas = null;
 
         int pilih;
 
@@ -22,7 +22,7 @@ public class Main {
             System.out.println("6. Lihat Petugas");
             System.out.println("7. Pinjam Buku");
             System.out.println("8. Kembalikan Buku");
-            System.out.println("9. Tampil Riwayat Transaksi");
+            System.out.println("9. Tampil Riwayat");
             System.out.println("0. Keluar");
             System.out.print("Pilih: ");
             pilih = sc.nextInt();
@@ -35,8 +35,8 @@ public class Main {
                     String idB = sc.nextLine();
                     System.out.print("Judul   : ");
                     String judul = sc.nextLine();
-                    daftarBuku.add(new Buku(idB, judul));
-                    System.out.println("Buku berhasil ditambahkan!");
+                    buku = new Buku(idB, judul);
+                    System.out.println("Buku disimpan!");
                     break;
 
                 case 2:
@@ -47,9 +47,9 @@ public class Main {
                     System.out.print("Telepon    : ");
                     String telA = sc.nextLine();
                     System.out.print("Jurusan    : ");
-                    String jurusanA = sc.nextLine();
-                    daftarAnggota.add(new Anggota(idA, namaA, telA, jurusanA));
-                    System.out.println("Anggota berhasil ditambahkan!");
+                    String jurA = sc.nextLine();
+                    anggota = new Anggota(idA, namaA, telA, jurA);
+                    System.out.println("Anggota disimpan!");
                     break;
 
                 case 3:
@@ -60,69 +60,42 @@ public class Main {
                     System.out.print("Telepon    : ");
                     String telP = sc.nextLine();
                     System.out.print("Shift      : ");
-                    String shiftP = sc.nextLine();
-                    daftarPetugas.add(new Petugas(idP, namaP, telP, shiftP));
-                    System.out.println("Petugas berhasil ditambahkan!");
+                    String shift = sc.nextLine();
+                    petugas = new Petugas(idP, namaP, telP, shift);
+                    System.out.println("Petugas disimpan!");
                     break;
 
                 case 4:
-                    System.out.println("\n--- Daftar Buku ---");
-                    for (Buku b : daftarBuku) b.tampilkanInfo();
+                    System.out.println("\n--- DATA BUKU ---");
+                    if (buku != null) buku.tampilkanInfo();
+                    else System.out.println("Belum ada buku.");
                     break;
 
                 case 5:
-                    System.out.println("\n--- Daftar Anggota ---");
-                    for (Anggota a : daftarAnggota) a.tampilkanInfo();
+                    System.out.println("\n--- DATA ANGGOTA ---");
+                    if (anggota != null) anggota.tampilkanInfo();
+                    else System.out.println("Belum ada anggota.");
                     break;
 
                 case 6:
-                    System.out.println("\n--- Daftar Petugas ---");
-                    for (Petugas p : daftarPetugas) p.tampilkanInfo();
+                    System.out.println("\n--- DATA PETUGAS ---");
+                    if (petugas != null) petugas.tampilkanInfo();
+                    else System.out.println("Belum ada petugas.");
                     break;
 
                 case 7:
-                    System.out.println("\n--- PINJAM BUKU ---");
+                    if (anggota == null || buku == null) {
+                        System.out.println("Data anggota / buku belum lengkap!");
+                        break;
+                    }
 
                     System.out.print("ID Transaksi : ");
                     String idT = sc.nextLine();
 
-                    System.out.print("ID Anggota   : ");
-                    String idAng = sc.nextLine();
-
-                    Anggota foundA = null;
-                    for (Anggota a : daftarAnggota) {
-                        if (a.idUser.equals(idAng)) {
-                            foundA = a;
-                            break;
-                        }
-                    }
-
-                    if (foundA == null) {
-                        System.out.println("Anggota tidak ditemukan!");
-                        break;
-                    }
-
-                    System.out.print("ID Buku : ");
-                    String idBuku = sc.nextLine();
-
-                    Buku foundB = null;
-                    for (Buku b : daftarBuku) {
-                        if (b.getIdBuku().equals(idBuku)) {
-                            foundB = b;
-                            break;
-                        }
-                    }
-
-                    if (foundB == null) {
-                        System.out.println("Buku tidak ditemukan!");
-                        break;
-                    }
-
-                    transaksi.pinjamBuku(idT, foundA, foundB);
+                    transaksi.pinjamBuku(idT, anggota, buku);
                     break;
 
                 case 8:
-                    System.out.println("\n--- KEMBALIKAN BUKU ---");
                     System.out.print("ID Transaksi : ");
                     String idTK = sc.nextLine();
                     transaksi.kembaliBuku(idTK);
@@ -133,7 +106,7 @@ public class Main {
                     break;
 
                 case 0:
-                    System.out.println("Keluar program...");
+                    System.out.println("Program selesai...");
                     break;
 
                 default:
