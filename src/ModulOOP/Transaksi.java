@@ -11,6 +11,7 @@ public class Transaksi {
     public Transaksi() {}
 
     public void pinjamBuku(String idT, Petugas p, Anggota a, Buku b) {
+
         this.idTransaksi = idT;
         this.petugas = p;
         this.anggota = a;
@@ -21,7 +22,7 @@ public class Transaksi {
         System.out.println("ID Transaksi : " + idTransaksi);
         System.out.println("Petugas      : " + p.getNama());
         System.out.println("Anggota      : " + a.getNama());
-        System.out.println("Buku         : " + b.getJudul());
+        System.out.println("Buku         : " + b.getJudul());   // FIX
     }
 
     public void kembaliBuku(String idT) {
@@ -37,7 +38,7 @@ public class Transaksi {
 
         if (statusDipinjam) {
             statusDipinjam = false;
-            System.out.println("Buku \"" + buku.getJudul() + "\" telah dikembalikan.");
+            System.out.println("Buku \"" + buku.getJudul() + "\" telah dikembalikan.");  // FIX
         } else {
             System.out.println("Transaksi sudah dikembalikan sebelumnya!");
         }
@@ -53,7 +54,7 @@ public class Transaksi {
         System.out.println("ID Transaksi : " + idTransaksi);
         System.out.println("Petugas      : " + petugas.getNama());
         System.out.println("Anggota      : " + anggota.getNama());
-        System.out.println("Buku         : " + buku.getJudul());
+        System.out.println("Buku         : " + buku.getJudul());   // FIX
         System.out.println("Status       : " + (statusDipinjam ? "Dipinjam" : "Dikembalikan"));
     }
 }

@@ -38,9 +38,19 @@ public class Main {
                 case 1:
                     System.out.print("ID Buku : ");
                     String idB = sc.nextLine();
+
                     System.out.print("Judul   : ");
                     String judul = sc.nextLine();
-                    buku = new Buku(idB, judul);
+
+                    System.out.print("Kategori : ");
+                    String kategori = sc.nextLine();
+
+                    System.out.print("Jumlah Halaman : ");
+                    int jumlahHalaman = sc.nextInt();
+                    sc.nextLine();
+
+                    buku = new Buku(idB, judul, kategori, jumlahHalaman);
+
                     System.out.println("Buku disimpan!");
                     break;
 
