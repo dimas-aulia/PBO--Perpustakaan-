@@ -1,3 +1,8 @@
+import ModulOOP.Anggota;
+import ModulOOP.Buku;
+import ModulOOP.Petugas;
+import ModulOOP.Transaksi;
+
 import java.util.Scanner;
 
 public class Main {
@@ -22,7 +27,7 @@ public class Main {
             System.out.println("6. Lihat Petugas");
             System.out.println("7. Pinjam Buku");
             System.out.println("8. Kembalikan Buku");
-            System.out.println("9. Tampil Riwayat");
+            System.out.println("9. Tampil Riwayat Transaksi");
             System.out.println("0. Keluar");
             System.out.print("Pilih: ");
             pilih = sc.nextInt();
@@ -84,21 +89,27 @@ public class Main {
                     break;
 
                 case 7:
-                    if (anggota == null || buku == null) {
-                        System.out.println("Data anggota / buku belum lengkap!");
+                    if (petugas == null || anggota == null || buku == null) {
+                        System.out.println("Data belum lengkap!");
                         break;
                     }
 
                     System.out.print("ID Transaksi : ");
-                    String idT = sc.nextLine();
+                    String idTpinjam = sc.nextLine();
 
-                    transaksi.pinjamBuku(idT, anggota, buku);
+                    transaksi.pinjamBuku(idTpinjam, petugas, anggota, buku);
                     break;
 
                 case 8:
+                    if (petugas == null || anggota == null || buku == null) {
+                        System.out.println("Data belum lengkap!");
+                        break;
+                    }
+
                     System.out.print("ID Transaksi : ");
-                    String idTK = sc.nextLine();
-                    transaksi.kembaliBuku(idTK);
+                    String idTkembali = sc.nextLine();
+
+                    transaksi.kembaliBuku(idTkembali);
                     break;
 
                 case 9:

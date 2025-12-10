@@ -1,3 +1,5 @@
+package ModulOOP;
+
 public class Anggota extends PenggunaPerpustakaan {
 
     private String jurusan;
@@ -6,6 +8,8 @@ public class Anggota extends PenggunaPerpustakaan {
         super(idUser, nama, telepon);
         this.jurusan = jurusan;
     }
+
+    public String getJurusan() { return jurusan; }
 
     @Override
     public void tampilkanInfo() {

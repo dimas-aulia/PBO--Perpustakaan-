@@ -14,17 +14,17 @@ Status saat ini: Sudah diterapkan.
 
 Penjelasan:
 
-Class Transaksi memiliki relasi asosiasi dengan Anggota dan Buku.
+Class ModulOOP.Transaksi memiliki relasi asosiasi dengan ModulOOP.Anggota dan ModulOOP.Buku.
 
-Artinya, Transaksi “menggunakan” objek Anggota dan Buku untuk melakukan peminjaman.
+Artinya, ModulOOP.Transaksi “menggunakan” objek ModulOOP.Anggota dan ModulOOP.Buku untuk melakukan peminjaman.
 
-Yang belum dibuat: Fungsi catatPeminjaman() di class Petugas.
+Yang belum dibuat: Fungsi catatPeminjaman() di class ModulOOP.Petugas.
 
 Contoh konsep:
 
-Petugas mencatat identitas anggota yang meminjam buku.
+ModulOOP.Petugas mencatat identitas anggota yang meminjam buku.
 
-Anggota hanya pasif menerima pencatatan, tidak mencatat data sendiri.
+ModulOOP.Anggota hanya pasif menerima pencatatan, tidak mencatat data sendiri.
 
 
 2. Asosiasi Dua Arah (Bidirectional Association)
@@ -39,7 +39,7 @@ Contoh kasus:
 
 Seorang calon anggota menyerahkan identitas ke petugas.
 
-Petugas memproses data dan memberikan kartu keanggotaan.
+ModulOOP.Petugas memproses data dan memberikan kartu keanggotaan.
 
 Relasi dua arah: anggota ↔ kartu, kartu ↔ petugas.
 
@@ -50,13 +50,13 @@ Status saat ini: Sudah diterapkan.
 
 Penjelasan:
 
-Class pencatat peminjaman (Transaksi) tergantung pada objek Anggota dan Buku.
+Class pencatat peminjaman (ModulOOP.Transaksi) tergantung pada objek ModulOOP.Anggota dan ModulOOP.Buku.
 
-Jika Anggota atau Buku berubah, Transaksi akan terpengaruh.
+Jika ModulOOP.Anggota atau ModulOOP.Buku berubah, ModulOOP.Transaksi akan terpengaruh.
 
 Contoh implementasi:
 
-Method void pinjamBuku(String idT, Anggota a, Buku b).
+Method void pinjamBuku(String idT, ModulOOP.Anggota a, ModulOOP.Buku b).
 
 Yang perlu dibuat: 
 Class transaksi menambahkan attribut tanggal pinjam (int)
@@ -72,13 +72,13 @@ Class baru DaftarPustaka dengan atribut judulReferensi (String).
 
 Penjelasan:
 
-Buku memiliki daftar pustaka, tetapi daftar pustaka tidak wajib.
+ModulOOP.Buku memiliki daftar pustaka, tetapi daftar pustaka tidak wajib.
 
 Jika buku dihapus, daftar pustaka masih bisa ada secara independen.
 
 Contoh kasus:
 
-Buku memiliki pengarang dan daftar pustaka, tapi buku tetap disebut buku walau daftar pustaka kosong.
+ModulOOP.Buku memiliki pengarang dan daftar pustaka, tapi buku tetap disebut buku walau daftar pustaka kosong.
 
 
 5. Komposisi (Composition)
@@ -95,7 +95,7 @@ isiHalaman (String)
 
 Penjelasan:
 
-Buku selalu memiliki setidaknya satu halaman.
+ModulOOP.Buku selalu memiliki setidaknya satu halaman.
 
 Jika buku dihapus, seluruh halaman ikut terhapus.
 

@@ -1,3 +1,5 @@
+package ModulOOP;
+
 public class Petugas extends PenggunaPerpustakaan {
 
     private String shift;
@@ -7,9 +9,12 @@ public class Petugas extends PenggunaPerpustakaan {
         this.shift = shift;
     }
 
+    public String getShift() { return shift; }
+
     @Override
     public void tampilkanInfo() {
         super.tampilkanInfo();
         System.out.println("Shift   : " + shift);
     }
 }
+
