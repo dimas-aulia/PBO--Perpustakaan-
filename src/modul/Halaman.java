@@ -1,4 +1,4 @@
-package ModulOOP;
+package modul;
 
 public class Halaman {
     private int jumlahHalaman;
