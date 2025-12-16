@@ -2,11 +2,15 @@ package view;
 
 import controller.BukuController;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Buku;
+import modul.Buku;
 
-public class FormBukuController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class FormBukuController implements Initializable {
 
     @FXML private TextField id, nama, penulis, tahun, halaman;
     @FXML private TableView<Buku> tableBuku;
@@ -16,7 +20,7 @@ public class FormBukuController {
     BukuController controller = new BukuController();
 
     @FXML
-    public void initialize() {
+    public void initialize(URL url, ResourceBundle rb) {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colPenulis.setCellValueFactory(new PropertyValueFactory<>("penulis"));

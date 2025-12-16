@@ -1,7 +1,7 @@
 package controller;
 
 import javafx.scene.control.TableView;
-import model.Buku;
+import modul.Buku;
 
 public class BukuController {
 
