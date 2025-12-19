@@ -16,6 +16,11 @@ public class Main extends Application {
                 )
         );
 
+        // CSS global
+        scene.getStylesheets().add(
+                getClass().getResource("/css/style.css").toExternalForm()
+        );
+
         stage.setTitle("Login Perpustakaan");
         stage.setScene(scene);
         stage.show();

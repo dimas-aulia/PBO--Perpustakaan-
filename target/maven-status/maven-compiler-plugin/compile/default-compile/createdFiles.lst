@@ -1,11 +1,13 @@
 modul\Anggota.class
 modul\PenggunaPerpustakaan.class
+controller\HomeController.class
 modul\Halaman.class
-view\FormBukuController.class
+controller\PetugasController.class
 app\Koneksi.class
 app\Main.class
 modul\DaftarPustaka.class
 controller\LoginController.class
 modul\Petugas.class
 controller\BukuController.class
+controller\AnggotaController.class
 modul\Buku.class
