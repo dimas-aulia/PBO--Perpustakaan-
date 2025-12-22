@@ -7,6 +7,7 @@ app\Koneksi.class
 app\Main.class
 modul\DaftarPustaka.class
 controller\LoginController.class
+database\BukuDatabase.class
 modul\Petugas.class
 controller\BukuController.class
 controller\AnggotaController.class

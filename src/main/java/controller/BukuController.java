@@ -1,5 +1,6 @@
 package controller;
 
+import database.BukuDatabase;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,15 +12,11 @@ import java.util.ResourceBundle;
 
 public class BukuController implements Initializable {
 
-    // ===== INPUT =====
     @FXML private TextField id, nama, penulis, tahun, halaman;
-
-    // ===== TABLE =====
     @FXML private TableView<Buku> tableBuku;
     @FXML private TableColumn<Buku, String> colId, colNama, colPenulis;
     @FXML private TableColumn<Buku, Integer> colTahun, colHalaman;
 
-    // ===== INIT =====
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -27,17 +24,31 @@ public class BukuController implements Initializable {
         colPenulis.setCellValueFactory(new PropertyValueFactory<>("penulis"));
         colTahun.setCellValueFactory(new PropertyValueFactory<>("tahun"));
         colHalaman.setCellValueFactory(new PropertyValueFactory<>("halaman"));
+
+        // 🔹 Listener klik baris
+        tableBuku.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldData, newData) -> {
+                    if (newData != null) {
+                        id.setText(newData.getId());
+                        nama.setText(newData.getNama());
+                        penulis.setText(newData.getPenulis());
+                        tahun.setText(String.valueOf(newData.getTahun()));
+                        halaman.setText(String.valueOf(newData.getHalaman()));
+                    }
+                }
+        );
+
         tampilBuku();
     }
 
-    // ===== CRUD =====
+
     private void tampilBuku() {
-        tableBuku.setItems(Buku.getAll());
+        tableBuku.setItems(BukuDatabase.getAll());
     }
 
     @FXML
     private void handleSimpan() {
-        Buku.insert(new Buku(
+        BukuDatabase.insert(new Buku(
                 id.getText(),
                 nama.getText(),
                 penulis.getText(),
@@ -47,15 +58,41 @@ public class BukuController implements Initializable {
         tampilBuku();
     }
 
+    private void clearForm() {
+        id.clear();
+        nama.clear();
+        penulis.clear();
+        tahun.clear();
+        halaman.clear();
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
     @FXML
     private void handleHapus() {
-        Buku.delete(id.getText());
+        Buku selected = tableBuku.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            showAlert("Peringatan", "Pilih data pada tabel terlebih dahulu!");
+            return;
+        }
+
+        BukuDatabase.delete(selected.getId());
         tampilBuku();
+        clearForm();
     }
+
 
     @FXML
     private void handleUbah() {
-        Buku.update(new Buku(
+        BukuDatabase.update(new Buku(
                 id.getText(),
                 nama.getText(),
                 penulis.getText(),

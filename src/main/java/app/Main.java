@@ -1,5 +1,6 @@
 package app;
 
+import database.BukuDatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +10,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        BukuDatabase.createTable();
+        BukuDatabase.seedData();
 
         Scene scene = new Scene(
                 FXMLLoader.load(

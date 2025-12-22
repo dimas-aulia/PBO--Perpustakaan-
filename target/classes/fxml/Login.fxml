@@ -89,26 +89,54 @@
                 </TextField>
             </VBox>
 
-            <!-- PASSWORD FIELD -->
+            <!-- PASSWORD FIELD + TOGGLE -->
             <VBox spacing="6">
                 <Label text="Password"
                        style="-fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-font-size: 13px;"/>
-                <PasswordField fx:id="password"
+
+                <HBox spacing="8" alignment="CENTER_RIGHT">
+
+                    <!-- PASSWORD TERSEMBUNYI -->
+                    <PasswordField fx:id="password"
+                                   prefHeight="45"
+                                   HBox.hgrow="ALWAYS"
+                                   promptText="Masukkan password"
+                                   style="-fx-background-color: #f8f9fa;
+                              -fx-background-radius: 10;
+                              -fx-border-color: #e0e0e0;
+                              -fx-border-radius: 10;
+                              -fx-border-width: 1.5;
+                              -fx-padding: 12;
+                              -fx-font-size: 14px;
+                              -fx-prompt-text-fill: #95a5a6;"/>
+
+                    <!-- PASSWORD TERLIHAT -->
+                    <TextField fx:id="passwordText"
                                prefHeight="45"
+                               HBox.hgrow="ALWAYS"
                                promptText="Masukkan password"
+                               visible="false"
+                               managed="false"
                                style="-fx-background-color: #f8f9fa;
-                                      -fx-background-radius: 10;
-                                      -fx-border-color: #e0e0e0;
-                                      -fx-border-radius: 10;
-                                      -fx-border-width: 1.5;
-                                      -fx-padding: 12;
-                                      -fx-font-size: 14px;
-                                      -fx-prompt-text-fill: #95a5a6;">
-                    <font>
-                        <Font size="14"/>
-                    </font>
-                </PasswordField>
+                          -fx-background-radius: 10;
+                          -fx-border-color: #e0e0e0;
+                          -fx-border-radius: 10;
+                          -fx-border-width: 1.5;
+                          -fx-padding: 12;
+                          -fx-font-size: 14px;
+                          -fx-prompt-text-fill: #95a5a6;"/>
+
+                    <!-- TOMBOL MATA -->
+                    <Button text="👁"
+                            onAction="#togglePassword"
+                            style="-fx-background-color: transparent;
+                       -fx-font-size: 16px;
+                       -fx-cursor: hand;"/>
+                </HBox>
             </VBox>
+
+
+
 
             <!-- REMEMBER ME -->
             <HBox alignment="CENTER_LEFT" spacing="8">
