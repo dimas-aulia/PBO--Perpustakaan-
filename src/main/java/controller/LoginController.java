@@ -17,11 +17,21 @@ public class LoginController {
     @FXML
     private TextField passwordText;
 
+    private String getPasswordValue() {
+        if (password.isVisible()) {
+            return password.getText();
+        } else {
+            return passwordText.getText();
+        }
+    }
+
     @FXML
     private void handleLogin() {
 
-        // 1️⃣ VALIDASI INPUT KOSONG
-        if (username.getText().isEmpty() || password.getText().isEmpty()) {
+        String user = username.getText();
+        String pass = getPasswordValue();
+
+        if (user.isEmpty() || pass.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Peringatan");
             alert.setHeaderText(null);
@@ -30,23 +40,16 @@ public class LoginController {
             return;
         }
 
-        // 2️⃣ LOGIN STATIS (DUMMY) → MAHASISWA
-        if (username.getText().equals("mahasiswa")
-                && password.getText().equals("mahasiswa")) {
-
-            bukaHalaman("/fxml/MahasiswaView.fxml", "Home Mahasiswa");
-
+        // LOGIN MAHASISWA
+        if (user.equals("mahasiswa") && pass.equals("mahasiswa")) {
+            bukaHalaman("/fxml/DaftarBuku.fxml", "Home Mahasiswa");
         }
 
-        // 3️⃣ LOGIN STATIS (DUMMY) → PETUGAS
-        else if (username.getText().equals("petugas")
-                && password.getText().equals("petugas")) {
-
+        // LOGIN PETUGAS
+        else if (user.equals("petugas") && pass.equals("petugas")) {
             bukaHalaman("/fxml/HomePage.fxml", "Home Petugas");
-
         }
 
-        // 4️⃣ LOGIN GAGAL
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Login Gagal");
@@ -56,28 +59,23 @@ public class LoginController {
         }
     }
 
-    // 🔧 METHOD BANTUAN (AGAR KODE RAPI)
     private void bukaHalaman(String fxml, String title) {
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            Scene scene = new Scene(loader.load());
+
             Stage stage = (Stage) username.getScene().getWindow();
-
-            Scene scene = new Scene(
-                    FXMLLoader.load(getClass().getResource(fxml))
-            );
-
-            // CSS GLOBAL
-            scene.getStylesheets().add(
-                    getClass().getResource("/css/style.css").toExternalForm()
-            );
-
             stage.setTitle(title);
             stage.setScene(scene);
             stage.show();
 
         } catch (Exception e) {
+            System.out.println("GAGAL LOAD: " + fxml);
             e.printStackTrace();
         }
     }
+
+
 
     @FXML
     private void togglePassword() {
