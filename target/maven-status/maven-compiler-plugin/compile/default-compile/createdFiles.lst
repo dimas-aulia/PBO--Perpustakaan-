@@ -3,6 +3,7 @@ controller\HomeController.class
 modul\Halaman.class
 controller\PetugasController.class
 app\Main.class
+database\AnggotaDatabase.class
 controller\LoginController.class
 database\BukuDatabase.class
 controller\BukuController.class

@@ -9,11 +9,7 @@ public class Anggota extends PenggunaPerpustakaan {
         this.jurusan = jurusan;
     }
 
-    public String getJurusan() { return jurusan; }
-
-    @Override
-    public void tampilkanInfo() {
-        super.tampilkanInfo();
-        System.out.println("Jurusan : " + jurusan);
+    public String getJurusan() {
+        return jurusan;
     }
 }
