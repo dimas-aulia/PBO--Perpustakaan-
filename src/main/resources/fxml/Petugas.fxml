@@ -10,7 +10,7 @@
 
     <children>
 
-        <!-- LABEL KIRI -->
+        <!-- LABEL -->
         <VBox layoutX="34.0" layoutY="41.0" spacing="13.0">
             <children>
                 <Label text="ID PETUGAS"/>
@@ -21,12 +21,12 @@
         </VBox>
 
         <!-- INPUT -->
-        <VBox layoutX="132.0" layoutY="37.0" spacing="8.0">
+        <VBox layoutX="132.0" layoutY="37.0" spacing="5.0">
             <children>
-                <TextField fx:id="idUser" prefHeight="30"/>
-                <TextField fx:id="nama" prefHeight="30"/>
-                <TextField fx:id="telepon" prefHeight="30"/>
-                <ComboBox fx:id="shift" prefHeight="30"/>
+                <TextField fx:id="idUser" prefHeight="34.0" prefWidth="180.0"/>
+                <TextField fx:id="nama" prefHeight="34.0" prefWidth="180.0"/>
+                <TextField fx:id="telepon" prefHeight="34.0" prefWidth="180.0"/>
+                <ComboBox fx:id="shift" prefHeight="34.0" prefWidth="180.0"/>
             </children>
         </VBox>
 
@@ -38,10 +38,10 @@
                    prefWidth="499.0">
 
             <columns>
-                <TableColumn fx:id="colIdUser" text="ID" prefWidth="120"/>
-                <TableColumn fx:id="colNama" text="NAMA" prefWidth="120"/>
-                <TableColumn fx:id="colTelepon" text="TELEPON" prefWidth="120"/>
-                <TableColumn fx:id="colShift" text="SHIFT" prefWidth="120"/>
+                <TableColumn fx:id="colIdUser" text="ID PETUGAS" prefWidth="120.0"/>
+                <TableColumn fx:id="colNama" text="NAMA" prefWidth="120.0"/>
+                <TableColumn fx:id="colTelepon" text="TELEPON" prefWidth="120.0"/>
+                <TableColumn fx:id="colShift" text="SHIFT" prefWidth="120.0"/>
             </columns>
         </TableView>
 
@@ -55,10 +55,6 @@
                 onAction="#handleHapus"/>
 
         <Button layoutX="193.0" layoutY="208.0"
-                text="LIHAT"
-                onAction="#handleLihat"/>
-
-        <Button layoutX="259.0" layoutY="208.0"
                 text="UBAH"
                 onAction="#handleUbah"/>
 

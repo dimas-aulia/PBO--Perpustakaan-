@@ -14,12 +14,31 @@ public class Petugas {
         this.shift = shift;
     }
 
-    public String getIdUser() { return idUser; }
-    public String getNama() { return nama; }
-    public String getTelepon() { return telepon; }
-    public String getShift() { return shift; }
+    public String getIdUser() {
+        return idUser;
+    }
 
-    public void setNama(String nama) { this.nama = nama; }
-    public void setTelepon(String telepon) { this.telepon = telepon; }
-    public void setShift(String shift) { this.shift = shift; }
+    public String getNama() {
+        return nama;
+    }
+
+    public String getTelepon() {
+        return telepon;
+    }
+
+    public String getShift() {
+        return shift;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public void setTelepon(String telepon) {
+        this.telepon = telepon;
+    }
+
+    public void setShift(String shift) {
+        this.shift = shift;
+    }
 }

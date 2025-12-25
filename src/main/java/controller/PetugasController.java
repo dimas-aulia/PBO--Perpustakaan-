@@ -13,20 +13,17 @@ import java.util.ResourceBundle;
 
 public class PetugasController implements Initializable {
 
-    // ===== FORM =====
     @FXML private TextField idUser;
     @FXML private TextField nama;
     @FXML private TextField telepon;
     @FXML private ComboBox<String> shift;
 
-    // ===== TABLE =====
     @FXML private TableView<Petugas> tablePetugas;
     @FXML private TableColumn<Petugas, String> colIdUser;
     @FXML private TableColumn<Petugas, String> colNama;
     @FXML private TableColumn<Petugas, String> colTelepon;
     @FXML private TableColumn<Petugas, String> colShift;
 
-    // ===== DATA =====
     private final ObservableList<Petugas> listPetugas =
             FXCollections.observableArrayList();
 
@@ -40,10 +37,33 @@ public class PetugasController implements Initializable {
         colTelepon.setCellValueFactory(new PropertyValueFactory<>("telepon"));
         colShift.setCellValueFactory(new PropertyValueFactory<>("shift"));
 
+        listPetugas.addAll(
+                new Petugas("P001", "Andi", "0811111111", "Pagi"),
+                new Petugas("P002", "Budi", "0822222222", "Siang"),
+                new Petugas("P003", "Citra", "0833333333", "Malam"),
+                new Petugas("P004", "Dewi", "0844444444", "Pagi"),
+                new Petugas("P005", "Eko", "0855555555", "Siang"),
+                new Petugas("P006", "Fajar", "0866666666", "Malam"),
+                new Petugas("P007", "Gita", "0877777777", "Pagi"),
+                new Petugas("P008", "Hadi", "0888888888", "Siang"),
+                new Petugas("P009", "Indah", "0899999999", "Malam"),
+                new Petugas("P010", "Joko", "0810000000", "Pagi")
+        );
+
         tablePetugas.setItems(listPetugas);
+
+        // klik tabel → isi form
+        tablePetugas.setOnMouseClicked(e -> {
+            Petugas p = tablePetugas.getSelectionModel().getSelectedItem();
+            if (p != null) {
+                idUser.setText(p.getIdUser());
+                nama.setText(p.getNama());
+                telepon.setText(p.getTelepon());
+                shift.setValue(p.getShift());
+            }
+        });
     }
 
-    // ===== BUTTON ACTION =====
     @FXML
     private void handleSimpan() {
         listPetugas.add(new Petugas(
@@ -75,11 +95,6 @@ public class PetugasController implements Initializable {
         clearForm();
     }
 
-    @FXML
-    private void handleLihat() {
-        tablePetugas.refresh();
-    }
-
     private void clearForm() {
         idUser.clear();
         nama.clear();
@@ -87,4 +102,3 @@ public class PetugasController implements Initializable {
         shift.setValue(null);
     }
 }
-
