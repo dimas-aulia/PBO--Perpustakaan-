@@ -67,6 +67,7 @@ public class LoginController {
             Stage stage = (Stage) username.getScene().getWindow();
             stage.setTitle(title);
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.show();
 
         } catch (Exception e) {

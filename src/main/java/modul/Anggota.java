@@ -11,6 +11,11 @@ public class Anggota extends PenggunaPerpustakaan {
         this.kelas = kelas;
     }
 
+    @Override
+    public void tampilkanPeran() {
+        System.out.println("Peran: Anggota Perpustakaan - Jurusan: " + jurusan);
+    }
+
     public String getJurusan() {
         return jurusan;
     }

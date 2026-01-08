@@ -45,7 +45,7 @@
         </HBox>
 
         <!-- TABLE -->
-        <TableView fx:id="tableBuku" layoutX="350" layoutY="25" prefHeight="360" prefWidth="569.0">
+        <TableView fx:id="tableBuku" layoutX="350" layoutY="25" prefHeight="360" prefWidth="577.0">
 
             <columns>
                 <TableColumn fx:id="colId" prefWidth="80" text="ID" />

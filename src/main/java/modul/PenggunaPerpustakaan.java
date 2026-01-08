@@ -1,6 +1,6 @@
 package modul;
 
-public class PenggunaPerpustakaan {
+public abstract class PenggunaPerpustakaan {
 
     protected String idUser;
     protected String nama;
@@ -15,6 +15,8 @@ public class PenggunaPerpustakaan {
     public String getIdUser() { return idUser; }
     public String getNama() { return nama; }
     public String getTelepon() { return telepon; }
+
+    public abstract void tampilkanPeran();
 
     public void tampilkanInfo() {
         System.out.println(idUser + " | " + nama + " | " + telepon);
