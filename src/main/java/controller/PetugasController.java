@@ -32,7 +32,6 @@ public class PetugasController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         PetugasDatabase.createTable();
-        PetugasDatabase.seedData();
         // ComboBox Shift
         shift.getItems().addAll("Pagi", "Siang", "Malam");
 
@@ -53,7 +52,6 @@ public class PetugasController implements Initializable {
                 nama.setText(p.getNama());
                 telepon.setText(p.getTelepon());
                 shift.setValue(p.getShift());
-                idUser.setDisable(true); // ID tidak boleh diubah
             }
         });
     }

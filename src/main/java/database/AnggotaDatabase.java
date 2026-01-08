@@ -28,22 +28,6 @@ public class AnggotaDatabase {
         }
     }
 
-    public static void seedData() {
-        if (!getAll().isEmpty()) return;
-
-        insert(new Anggota("A001", "Dimas", "0823654379", "Informatika", "E"));
-        insert(new Anggota("A002", "Firdi", "0835362721", "Informatika", "E"));
-        insert(new Anggota("A003", "Faris", "0812648392", "Manajemen", "E"));
-        insert(new Anggota("A004", "Hafid", "08244719924", "Akuntansi", "D"));
-        insert(new Anggota("A005", "Budi Santoso", "081234567890", "Teknik Informatika", "A"));
-        insert(new Anggota("A006", "Siti Nurhaliza", "082345678901", "Sistem Informasi", "B"));
-        insert(new Anggota("A007", "Andi Wijaya", "083456789012", "Teknik Elektro", "C"));
-        insert(new Anggota("A008", "Dewi Lestari", "084567890123", "Manajemen", "D"));
-        insert(new Anggota("A009", "Eko Prasetyo", "085678901234", "Akuntansi", "E"));
-        insert(new Anggota("A010", "Ratna Sari", "086789012345", "Desain Komunikasi Visual", "F"));
-
-    }
-
 
     public static void insert(Anggota a) {
         try (Connection c = Koneksi.getConnection();

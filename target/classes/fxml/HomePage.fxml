@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
+<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
 
     <!-- SIDEBAR -->
     <left>
@@ -22,8 +22,7 @@
             <Button onAction="#openAnggota" prefHeight="35.0" prefWidth="100.0" styleClass="menu-btn" text="Anggota" />
             <Button onAction="#openPetugas" prefHeight="35.0" prefWidth="100.0" styleClass="menu-btn" text="Petugas" />
             <Button onAction="#openTransaksi" prefHeight="35.0" prefWidth="100.0" styleClass="menu-btn" text="Transaksi" />
-
-            <Button prefHeight="35.0" prefWidth="100.0" styleClass="logout-btn" text="Logout" />
+            <Button onAction="#handleLogout" prefHeight="35.0" prefWidth="100.0" styleClass="logout-btn" text="Logout" />
         </VBox>
     </left>
 

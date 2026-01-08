@@ -4,21 +4,19 @@ import java.time.LocalDate;
 
 public class Transaksi {
     private int idTransaksi;
-    private String idUser;
-    private String namaAnggota;
-    private String idBuku;
-    private String judulBuku;
-    private LocalDate tanggalPinjam;
-    private LocalDate tanggalKembali;
+    private String idUser, namaAnggota, idBuku, judulBuku;
+    private LocalDate tanggalPinjam, tanggalKembali;
+    private int denda;
 
-    public Transaksi(int idTransaksi, String idUser, String namaAnggota, String idBuku, String judulBuku, LocalDate tanggalPinjam, LocalDate tanggalKembali) {
-        this.idTransaksi = idTransaksi;
-        this.idUser = idUser;
-        this.namaAnggota = namaAnggota;
-        this.idBuku = idBuku;
-        this.judulBuku = judulBuku;
-        this.tanggalPinjam = tanggalPinjam;
-        this.tanggalKembali = tanggalKembali;
+    public Transaksi(int id, String user, String nama, String buku, String judul, LocalDate p, LocalDate k, int denda) {
+        this.idTransaksi = id;
+        this.idUser = user;
+        this.namaAnggota = nama;
+        this.idBuku = buku;
+        this.judulBuku = judul;
+        this.tanggalPinjam = p;
+        this.tanggalKembali = k;
+        this.denda = denda;
     }
 
     // Getters
@@ -29,4 +27,5 @@ public class Transaksi {
     public String getJudulBuku() { return judulBuku; }
     public LocalDate getTanggalPinjam() { return tanggalPinjam; }
     public LocalDate getTanggalKembali() { return tanggalKembali; }
+    public int getDenda() { return denda; }
 }

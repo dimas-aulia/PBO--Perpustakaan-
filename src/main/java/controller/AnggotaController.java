@@ -1,97 +1,105 @@
 package controller;
-// testting terakhir
+
 import database.AnggotaDatabase;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modul.Anggota;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class AnggotaController {
 
-public class AnggotaController implements Initializable {
+    // TextField disesuaikan dengan fx:id di XML Anda
+    @FXML private TextField idUser;
+    @FXML private TextField nama;
+    @FXML private TextField telepon;
+    @FXML private TextField jurusan;
+    @FXML private TextField kelas;
 
-    @FXML private TextField idUser, nama, telepon, jurusan,kelas;
+    // Table dan Column disesuaikan dengan fx:id di XML Anda
     @FXML private TableView<Anggota> tableAnggota;
-    @FXML private TableColumn<Anggota, String> colIdUser, colNama, colTelepon, colJurusan, colKelas ;
+    @FXML private TableColumn<Anggota, String> colIdUser;
+    @FXML private TableColumn<Anggota, String> colNama;
+    @FXML private TableColumn<Anggota, String> colTelepon;
+    @FXML private TableColumn<Anggota, String> colJurusan;
+    @FXML private TableColumn<Anggota, String> colKelas;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        AnggotaDatabase.createTable();
-        AnggotaDatabase.seedData();
-
+    @FXML
+    public void initialize() {
+        // Inisialisasi Tabel
         colIdUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colTelepon.setCellValueFactory(new PropertyValueFactory<>("telepon"));
         colJurusan.setCellValueFactory(new PropertyValueFactory<>("jurusan"));
         colKelas.setCellValueFactory(new PropertyValueFactory<>("kelas"));
 
+        loadData();
 
-        tableAnggota.getSelectionModel().selectedItemProperty().addListener(
-                (obs, o, a) -> {
-                    if (a != null) {
-                        idUser.setText(a.getIdUser());
-                        nama.setText(a.getNama());
-                        telepon.setText(a.getTelepon());
-                        jurusan.setText(a.getJurusan());
-                        kelas.setText(a.getKelas());
-
-                    }
-                }
-        );
-
-        tampilAnggota();
+        // Listener untuk memilih data dari tabel (otomatis masuk ke TextField)
+        tableAnggota.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                idUser.setText(newVal.getIdUser());
+                nama.setText(newVal.getNama());
+                telepon.setText(newVal.getTelepon());
+                jurusan.setText(newVal.getJurusan());
+                kelas.setText(newVal.getKelas());
+                idUser.setEditable(false); // ID biasanya tidak boleh diubah saat mode UBAH
+            }
+        });
     }
 
-    private void tampilAnggota() {
+    private void loadData() {
         tableAnggota.setItems(AnggotaDatabase.getAll());
     }
 
     @FXML
     private void handleSimpan() {
-        AnggotaDatabase.insert(new Anggota(
-                idUser.getText(),
-                nama.getText(),
-                telepon.getText(),
-                jurusan.getText(),
-                kelas.getText()
-        ));
-
-        tampilAnggota();
-        clearForm();
-    }
-
-    @FXML
-    private void handleHapus() {
-        Anggota a = tableAnggota.getSelectionModel().getSelectedItem();
-        if (a != null) {
-            AnggotaDatabase.delete(a.getIdUser());
-            tampilAnggota();
-            clearForm();
+        if (idUser.getText().isEmpty() || nama.getText().isEmpty()) {
+            showAlert("Input Kosong", "ID dan Nama wajib diisi!");
+            return;
         }
+
+        Anggota a = new Anggota(idUser.getText(), nama.getText(), telepon.getText(), jurusan.getText(), kelas.getText());
+        AnggotaDatabase.insert(a);
+        loadData();
+        clearFields();
     }
 
     @FXML
     private void handleUbah() {
-        AnggotaDatabase.update(new Anggota(
-                idUser.getText(),
-                nama.getText(),
-                telepon.getText(),
-                jurusan.getText(),
-                kelas.getText()
-        ));
+        if (idUser.getText().isEmpty()) return;
 
-        tampilAnggota();
-        clearForm();
+        Anggota a = new Anggota(idUser.getText(), nama.getText(), telepon.getText(), jurusan.getText(), kelas.getText());
+        AnggotaDatabase.update(a);
+        loadData();
+        clearFields();
     }
 
-    private void clearForm() {
+    @FXML
+    private void handleHapus() {
+        Anggota selected = tableAnggota.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            AnggotaDatabase.delete(selected.getIdUser());
+            loadData();
+            clearFields();
+        } else {
+            showAlert("Peringatan", "Pilih data di tabel yang ingin dihapus!");
+        }
+    }
+
+    private void clearFields() {
         idUser.clear();
         nama.clear();
         telepon.clear();
         jurusan.clear();
         kelas.clear();
+        idUser.setEditable(true);
+    }
 
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

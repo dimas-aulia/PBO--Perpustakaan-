@@ -6,11 +6,11 @@ import javafx.collections.ObservableList;
 import modul.Transaksi;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class TransaksiDatabase {
 
     public static void createTable() {
-        // Perintah SQL yang benar dengan id_transaksi
         String sql = """
             CREATE TABLE IF NOT EXISTS transaksi (
                 id_transaksi INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,38 +19,44 @@ public class TransaksiDatabase {
                 id_buku VARCHAR(10),
                 judul_buku VARCHAR(100),
                 tgl_pinjam DATE,
-                tgl_kembali DATE DEFAULT NULL
+                tgl_kembali DATE NULL,
+                denda INTEGER DEFAULT 0
             )
             """;
-        try (Connection c = Koneksi.getConnection(); Statement s = c.createStatement()) {
+        try (Connection c = Koneksi.getConnection();
+             Statement s = c.createStatement()) {
             s.execute(sql);
         } catch (SQLException e) {
-            System.out.println("Gagal membuat tabel: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public static boolean pinjamBuku(String idUser, String nama, String idBuku, String judul) {
-        // Validasi: Apakah user meminjam buku yang sama dan belum dikembalikan?
-        String cekSql = "SELECT * FROM transaksi WHERE id_user = ? AND id_buku = ? AND tgl_kembali IS NULL";
+    public static boolean pinjamBuku(String idUser, String nama, String idBuku, String judul, LocalDate tgl) {
+        String cek = "SELECT * FROM transaksi WHERE id_user=? AND id_buku=? AND tgl_kembali IS NULL";
 
-        try (Connection c = Koneksi.getConnection()) {
-            PreparedStatement psCek = c.prepareStatement(cekSql);
+        // Pastikan setiap PreparedStatement berada dalam try-with-resources agar tidak terjadi 'Database Locked'
+        try (Connection c = Koneksi.getConnection();
+             PreparedStatement psCek = c.prepareStatement(cek)) {
+
             psCek.setString(1, idUser);
             psCek.setString(2, idBuku);
-            ResultSet rs = psCek.executeQuery();
 
-            if (rs.next()) return false; // Sudah meminjam buku yang sama
+            // Tutup ResultSet segera setelah pengecekan
+            try (ResultSet rs = psCek.executeQuery()) {
+                if (rs.next()) return false;
+            }
 
             String sql = "INSERT INTO transaksi (id_user, nama_anggota, id_buku, judul_buku, tgl_pinjam) VALUES (?,?,?,?,?)";
-            PreparedStatement ps = c.prepareStatement(sql);
-            ps.setString(1, idUser);
-            ps.setString(2, nama);
-            ps.setString(3, idBuku);
-            ps.setString(4, judul);
-            ps.setDate(5, Date.valueOf(LocalDate.now()));
-            ps.executeUpdate();
+            try (PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setString(1, idUser);
+                ps.setString(2, nama);
+                ps.setString(3, idBuku);
+                ps.setString(4, judul);
+                ps.setDate(5, Date.valueOf(tgl));
+                ps.executeUpdate();
+            }
 
-            // Ubah status buku menjadi DIPINJAM
+            // Memperbarui status buku menjadi DIPINJAM
             BukuDatabase.updateStatus(idBuku, "DIPINJAM");
             return true;
         } catch (SQLException e) {
@@ -59,32 +65,40 @@ public class TransaksiDatabase {
         }
     }
 
-    public static void kembalikanBuku(int idTransaksi, String idBuku) {
-        String sql = "UPDATE transaksi SET tgl_kembali = ? WHERE id_transaksi = ?";
-        try (Connection c = Koneksi.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setDate(1, Date.valueOf(LocalDate.now()));
-            ps.setInt(2, idTransaksi);
-            ps.executeUpdate();
+    public static void kembalikanBuku(int id, String idBuku, LocalDate p, LocalDate k) {
+        // Hitung selisih hari antara tanggal pinjam dan kembali
+        long selisih = ChronoUnit.DAYS.between(p, k);
+        // Jika lebih dari 7 hari, denda 10.000
+        int denda = (selisih > 7) ? 10000 : 0;
 
-            // Ubah status buku menjadi TERSEDIA
-            BukuDatabase.updateStatus(idBuku, "TERSEDIA");
-        } catch (SQLException e) { e.printStackTrace(); }
-    }
+        String sql = "UPDATE transaksi SET tgl_kembali=?, denda=? WHERE id_transaksi=?";
 
-    public static void hapus(int id) {
-        String sql = "DELETE FROM transaksi WHERE id_transaksi = ?";
-        try (Connection c = Koneksi.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
+        try (Connection c = Koneksi.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+
+            ps.setDate(1, Date.valueOf(k));
+            ps.setInt(2, denda);
+            ps.setInt(3, id);
+
+            int rowsAffected = ps.executeUpdate();
+
+            // SINKRONISASI: Hanya update status buku jika update transaksi berhasil
+            if (rowsAffected > 0) {
+                BukuDatabase.updateStatus(idBuku, "TERSEDIA");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static ObservableList<Transaksi> getAll() {
         ObservableList<Transaksi> list = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM transaksi";
+        String sql = "SELECT * FROM transaksi ORDER BY id_transaksi DESC";
+
         try (Connection c = Koneksi.getConnection();
              Statement s = c.createStatement();
              ResultSet r = s.executeQuery(sql)) {
+
             while (r.next()) {
                 list.add(new Transaksi(
                         r.getInt("id_transaksi"),
@@ -93,12 +107,24 @@ public class TransaksiDatabase {
                         r.getString("id_buku"),
                         r.getString("judul_buku"),
                         r.getDate("tgl_pinjam").toLocalDate(),
-                        r.getDate("tgl_kembali") != null ? r.getDate("tgl_kembali").toLocalDate() : null
+                        r.getDate("tgl_kembali") != null ? r.getDate("tgl_kembali").toLocalDate() : null,
+                        r.getInt("denda")
                 ));
             }
         } catch (SQLException e) {
-            System.out.println("Data gagal dimuat: " + e.getMessage());
+            e.printStackTrace();
         }
         return list;
+    }
+
+    public static void hapus(int id) {
+        String sql = "DELETE FROM transaksi WHERE id_transaksi = ?";
+        try (Connection c = Koneksi.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

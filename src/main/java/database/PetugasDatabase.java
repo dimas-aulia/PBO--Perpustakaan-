@@ -28,21 +28,7 @@ public class PetugasDatabase {
         }
     }
 
-    // ===== DATA AWAL =====
-    public static void seedData() {
-        if (!getAll().isEmpty()) return;
 
-        insert(new Petugas("P001","Andi","0811111111","Pagi"));
-        insert(new Petugas("P002","Budi","0822222222","Siang"));
-        insert(new Petugas("P003","Citra","0833333333","Malam"));
-        insert(new Petugas("P004","Dewi","0844444444","Pagi"));
-        insert(new Petugas("P005","Eko","0855555555","Siang"));
-        insert(new Petugas("P006","Fajar","0866666666","Malam"));
-        insert(new Petugas("P007","Gita","0877777777","Pagi"));
-        insert(new Petugas("P008","Hadi","0888888888","Siang"));
-        insert(new Petugas("P009","Indah","0899999999","Malam"));
-        insert(new Petugas("P010","Joko","0810000000","Pagi"));
-    }
 
     // ===== INSERT =====
     public static void insert(Petugas p) {

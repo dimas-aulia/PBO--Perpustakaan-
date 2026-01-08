@@ -2,27 +2,27 @@ package controller;
 
 import database.BukuDatabase;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import modul.Buku;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class BukuController {
+    // SESUAIKAN DENGAN FXML ANDA
+    @FXML private TextField id;      // fx:id="id"
+    @FXML private TextField nama;    // fx:id="nama"
+    @FXML private TextField penulis; // fx:id="penulis"
+    @FXML private TextField tahun;   // fx:id="tahun"
+    @FXML private TextField halaman; // fx:id="halaman"
 
-public class BukuController implements Initializable {
-
-    @FXML private TextField id, nama, penulis, tahun, halaman,status;
     @FXML private TableView<Buku> tableBuku;
-    @FXML private TableColumn<Buku, String> colId, colNama, colPenulis,colStatus;
+    @FXML private TableColumn<Buku, String> colId, colNama, colPenulis, colStatus;
     @FXML private TableColumn<Buku, Integer> colTahun, colHalaman;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
+    @FXML
+    public void initialize() {
         BukuDatabase.createTable();
-        BukuDatabase.seedData();
 
+        // Mapping kolom ke properti class Buku
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colPenulis.setCellValueFactory(new PropertyValueFactory<>("penulis"));
@@ -30,89 +30,60 @@ public class BukuController implements Initializable {
         colHalaman.setCellValueFactory(new PropertyValueFactory<>("halaman"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        // 🔹 Listener klik baris
-        tableBuku.getSelectionModel().selectedItemProperty().addListener(
-                (obs, oldData, newData) -> {
-                    if (newData != null) {
-                        id.setText(newData.getId());
-                        nama.setText(newData.getNama());
-                        penulis.setText(newData.getPenulis());
-                        tahun.setText(String.valueOf(newData.getTahun()));
-                        halaman.setText(String.valueOf(newData.getHalaman()));
-                        status.setText(newData.getPenulis());
-                    }
-                }
-        );
+        loadData();
 
-        tampilBuku();
+        // Fitur Klik Tabel: agar data muncul di TextField saat ingin Ubah/Hapus
+        tableBuku.getSelectionModel().selectedItemProperty().addListener((obs, old, val) -> {
+            if (val != null) {
+                id.setText(val.getId());
+                nama.setText(val.getNama());
+                penulis.setText(val.getPenulis());
+                tahun.setText(String.valueOf(val.getTahun()));
+                halaman.setText(String.valueOf(val.getHalaman()));
+            }
+        });
     }
 
-
-    private void tampilBuku() {
+    private void loadData() {
         tableBuku.setItems(BukuDatabase.getAll());
     }
 
     @FXML
     private void handleSimpan() {
-        BukuDatabase.insert(new Buku(
-                id.getText(),
-                nama.getText(),
-                penulis.getText(),
-                Integer.parseInt(tahun.getText()),
-                Integer.parseInt(halaman.getText()),
-                status.getText()
-        ));
-        tampilBuku();
+        try {
+            Buku b = new Buku(id.getText(), nama.getText(), penulis.getText(),
+                    Integer.parseInt(tahun.getText()), Integer.parseInt(halaman.getText()), "TERSEDIA");
+            BukuDatabase.insert(b);
+            loadData();
+            clearFields();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Format angka salah atau ID duplikat!").show();
+        }
     }
 
-    private void clearForm() {
-        id.clear();
-        nama.clear();
-        penulis.clear();
-        tahun.clear();
-        halaman.clear();
-        status.clear();
+    @FXML
+    private void handleUbah() {
+        try {
+            Buku b = new Buku(id.getText(), nama.getText(), penulis.getText(),
+                    Integer.parseInt(tahun.getText()), Integer.parseInt(halaman.getText()), "TERSEDIA");
+            BukuDatabase.update(b);
+            loadData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 
     @FXML
     private void handleHapus() {
         Buku selected = tableBuku.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            showAlert("Peringatan", "Pilih data pada tabel terlebih dahulu!");
-            return;
+        if (selected != null) {
+            BukuDatabase.delete(selected.getId());
+            loadData();
+            clearFields();
         }
-
-        BukuDatabase.delete(selected.getId());
-        tampilBuku();
-        clearForm();
     }
 
-
-    @FXML
-    private void handleUbah() {
-        BukuDatabase.update(new Buku(
-                id.getText(),
-                nama.getText(),
-                penulis.getText(),
-                Integer.parseInt(tahun.getText()),
-                Integer.parseInt(halaman.getText()),
-                status.getText()
-        ));
-        tampilBuku();
-    }
-
-    @FXML
-    private void handleLihat() {
-        tampilBuku();
+    private void clearFields() {
+        id.clear(); nama.clear(); penulis.clear(); tahun.clear(); halaman.clear();
     }
 }
