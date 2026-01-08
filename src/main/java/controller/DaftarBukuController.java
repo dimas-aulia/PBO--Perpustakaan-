@@ -90,8 +90,19 @@ public class DaftarBukuController implements Initializable {
             Label lblPenulis = new Label("Penulis: " + buku.getPenulis());
             lblPenulis.setStyle("-fx-font-size: 13px; -fx-text-fill: #7F8C8D; -fx-font-style: italic;");
 
+            // === STATUS ===
+            Text txtStatus = new Text("Status: " + buku.getStatus());
+
+            if ("Dipinjam".equalsIgnoreCase(buku.getStatus())) {
+                txtStatus.setStyle("-fx-font-size: 12px; -fx-fill: red; -fx-font-weight: bold;");
+            } else {
+                txtStatus.setStyle("-fx-font-size: 12px; -fx-fill: green; -fx-font-weight: bold;");
+            }
+
+
             // --- KONTINER KARTU ---
-            VBox card = new VBox(10, img, lblKode, lblStatik, txtJudul, lblPenulis);
+            VBox card = new VBox(10, img, lblKode, lblStatik, txtJudul, lblPenulis,txtStatus);
+
             card.setAlignment(Pos.TOP_CENTER);
             card.setPrefWidth(280);
             card.setPadding(new javafx.geometry.Insets(20));

@@ -28,7 +28,8 @@ public class DaftarBukuDatabase {
                             r.getString("nama"),
                             r.getString("penulis"),
                             r.getInt("tahun"),
-                            r.getInt("halaman")
+                            r.getInt("halaman"),
+                            r.getString("status")
                     ));
                 }
             }
@@ -53,9 +54,9 @@ public class DaftarBukuDatabase {
                 String penulis = r.getString("penulis");
                 int tahun = r.getInt("tahun");
                 int halaman = r.getInt("halaman");
-
+                String status = r.getString("status");
                 // Masukkan ke dalam list sebagai objek Buku
-                list.add(new Buku(id, nama, penulis, tahun, halaman));
+                list.add(new Buku(id, nama, penulis, tahun, halaman,status));
             }
 
         } catch (Exception e) {

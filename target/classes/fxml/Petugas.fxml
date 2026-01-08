@@ -1,62 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="844.0"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.PetugasController">
+<AnchorPane prefHeight="400.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PetugasController">
 
     <children>
 
         <!-- LABEL -->
         <VBox layoutX="34.0" layoutY="41.0" spacing="13.0">
             <children>
-                <Label text="ID PETUGAS"/>
-                <Label text="NAMA"/>
-                <Label text="TELEPON"/>
-                <Label text="SHIFT"/>
+                <Label text="ID PETUGAS" />
+                <Label text="NAMA" />
+                <Label text="TELEPON" />
+                <Label text="SHIFT" />
             </children>
         </VBox>
 
         <!-- INPUT -->
         <VBox layoutX="132.0" layoutY="37.0" spacing="5.0">
             <children>
-                <TextField fx:id="idUser" prefHeight="34.0" prefWidth="180.0"/>
-                <TextField fx:id="nama" prefHeight="34.0" prefWidth="180.0"/>
-                <TextField fx:id="telepon" prefHeight="34.0" prefWidth="180.0"/>
-                <ComboBox fx:id="shift" prefHeight="34.0" prefWidth="180.0"/>
+                <TextField fx:id="idUser" prefHeight="34.0" prefWidth="180.0" />
+                <TextField fx:id="nama" prefHeight="34.0" prefWidth="180.0" />
+                <TextField fx:id="telepon" prefHeight="34.0" prefWidth="180.0" />
+                <ComboBox fx:id="shift" prefHeight="34.0" prefWidth="180.0" />
             </children>
         </VBox>
 
         <!-- TABLE -->
-        <TableView fx:id="tablePetugas"
-                   layoutX="333.0"
-                   layoutY="27.0"
-                   prefHeight="347.0"
-                   prefWidth="499.0">
+        <TableView fx:id="tablePetugas" layoutX="333.0" layoutY="27.0" prefHeight="347.0" prefWidth="480.0">
 
             <columns>
-                <TableColumn fx:id="colIdUser" text="ID PETUGAS" prefWidth="120.0"/>
-                <TableColumn fx:id="colNama" text="NAMA" prefWidth="120.0"/>
-                <TableColumn fx:id="colTelepon" text="TELEPON" prefWidth="120.0"/>
-                <TableColumn fx:id="colShift" text="SHIFT" prefWidth="120.0"/>
+                <TableColumn fx:id="colIdUser" prefWidth="120.0" text="ID PETUGAS" />
+                <TableColumn fx:id="colNama" prefWidth="120.0" text="NAMA" />
+                <TableColumn fx:id="colTelepon" prefWidth="120.0" text="TELEPON" />
+                <TableColumn fx:id="colShift" prefWidth="120.0" text="SHIFT" />
             </columns>
         </TableView>
 
         <!-- BUTTON -->
-        <Button layoutX="41.0" layoutY="208.0"
-                text="SIMPAN"
-                onAction="#handleSimpan"/>
+        <Button layoutX="41.0" layoutY="208.0" onAction="#handleSimpan" text="SIMPAN" />
 
-        <Button layoutX="121.0" layoutY="208.0"
-                text="HAPUS"
-                onAction="#handleHapus"/>
+        <Button layoutX="121.0" layoutY="208.0" onAction="#handleHapus" text="HAPUS" />
 
-        <Button layoutX="193.0" layoutY="208.0"
-                text="UBAH"
-                onAction="#handleUbah"/>
+        <Button layoutX="193.0" layoutY="208.0" onAction="#handleUbah" text="UBAH" />
 
     </children>
 </AnchorPane>

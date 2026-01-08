@@ -11,13 +11,14 @@ public class AnggotaDatabase {
 
     public static void createTable() {
         String sql = """
-        CREATE TABLE IF NOT EXISTS anggota (
-            id_user VARCHAR(10) PRIMARY KEY,
-            nama VARCHAR(100),
-            telepon VARCHAR(20),
-            jurusan VARCHAR(100)
-        )
-        """;
+                CREATE TABLE IF NOT EXISTS anggota (
+                    id_user VARCHAR(10) PRIMARY KEY,
+                    nama VARCHAR(100),
+                    telepon VARCHAR(20),
+                    jurusan VARCHAR(100),
+                    kelas VARCHAR(5)
+                )
+                """;
 
         try (Connection c = Koneksi.getConnection();
              Statement s = c.createStatement()) {
@@ -30,33 +31,37 @@ public class AnggotaDatabase {
     public static void seedData() {
         if (!getAll().isEmpty()) return;
 
-        insert(new Anggota("A001","Andi","0811111111","Informatika"));
-        insert(new Anggota("A002","Budi","0822222222","Sistem Informasi"));
-        insert(new Anggota("A003","Citra","0833333333","Manajemen"));
-        insert(new Anggota("A004","Dewi","0844444444","Akuntansi"));
-        insert(new Anggota("A005","Eko","0855555555","Informatika"));
-        insert(new Anggota("A006","Fajar","0866666666","Elektro"));
-        insert(new Anggota("A007","Gita","0877777777","Hukum"));
-        insert(new Anggota("A008","Hadi","0888888888","Ekonomi"));
-        insert(new Anggota("A009","Indah","0899999999","Psikologi"));
-        insert(new Anggota("A010","Joko","0810000000","Informatika"));
+        insert(new Anggota("A001", "Dimas", "0823654379", "Informatika", "E"));
+        insert(new Anggota("A002", "Firdi", "0835362721", "Informatika", "E"));
+        insert(new Anggota("A003", "Faris", "0812648392", "Manajemen", "E"));
+        insert(new Anggota("A004", "Hafid", "08244719924", "Akuntansi", "D"));
+        insert(new Anggota("A005", "Budi Santoso", "081234567890", "Teknik Informatika", "A"));
+        insert(new Anggota("A006", "Siti Nurhaliza", "082345678901", "Sistem Informasi", "B"));
+        insert(new Anggota("A007", "Andi Wijaya", "083456789012", "Teknik Elektro", "C"));
+        insert(new Anggota("A008", "Dewi Lestari", "084567890123", "Manajemen", "D"));
+        insert(new Anggota("A009", "Eko Prasetyo", "085678901234", "Akuntansi", "E"));
+        insert(new Anggota("A010", "Ratna Sari", "086789012345", "Desain Komunikasi Visual", "F"));
+
     }
+
 
     public static void insert(Anggota a) {
         try (Connection c = Koneksi.getConnection();
              PreparedStatement ps =
-                     c.prepareStatement("INSERT INTO anggota VALUES (?,?,?,?)")) {
+                     c.prepareStatement("INSERT INTO anggota VALUES (?,?,?,?,?)")) {
 
             ps.setString(1, a.getIdUser());
             ps.setString(2, a.getNama());
             ps.setString(3, a.getTelepon());
             ps.setString(4, a.getJurusan());
+            ps.setString(5, a.getKelas());
             ps.executeUpdate();
 
         } catch (Exception e) {
             System.out.println(e);
         }
     }
+
 
     public static void delete(String id) {
         try (Connection c = Koneksi.getConnection();
@@ -75,18 +80,20 @@ public class AnggotaDatabase {
         try (Connection c = Koneksi.getConnection();
              PreparedStatement ps =
                      c.prepareStatement(
-                             "UPDATE anggota SET nama=?, telepon=?, jurusan=? WHERE id_user=?")) {
+                             "UPDATE anggota SET nama=?, telepon=?, jurusan=?, kelas=? WHERE id_user=?")) {
 
             ps.setString(1, a.getNama());
             ps.setString(2, a.getTelepon());
             ps.setString(3, a.getJurusan());
-            ps.setString(4, a.getIdUser());
+            ps.setString(4, a.getKelas());
+            ps.setString(5, a.getIdUser());
             ps.executeUpdate();
 
         } catch (Exception e) {
             System.out.println(e);
         }
     }
+
 
     public static ObservableList<Anggota> getAll() {
         ObservableList<Anggota> list = FXCollections.observableArrayList();
@@ -99,7 +106,8 @@ public class AnggotaDatabase {
                         r.getString("id_user"),
                         r.getString("nama"),
                         r.getString("telepon"),
-                        r.getString("jurusan")
+                        r.getString("jurusan"),
+                        r.getString("kelas")
                 ));
             }
         } catch (Exception e) {
@@ -108,3 +116,4 @@ public class AnggotaDatabase {
         return list;
     }
 }
+

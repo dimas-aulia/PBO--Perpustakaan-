@@ -12,18 +12,23 @@ import java.util.ResourceBundle;
 
 public class BukuController implements Initializable {
 
-    @FXML private TextField id, nama, penulis, tahun, halaman;
+    @FXML private TextField id, nama, penulis, tahun, halaman,status;
     @FXML private TableView<Buku> tableBuku;
-    @FXML private TableColumn<Buku, String> colId, colNama, colPenulis;
+    @FXML private TableColumn<Buku, String> colId, colNama, colPenulis,colStatus;
     @FXML private TableColumn<Buku, Integer> colTahun, colHalaman;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        BukuDatabase.createTable();
+        BukuDatabase.seedData();
+
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colPenulis.setCellValueFactory(new PropertyValueFactory<>("penulis"));
         colTahun.setCellValueFactory(new PropertyValueFactory<>("tahun"));
         colHalaman.setCellValueFactory(new PropertyValueFactory<>("halaman"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         // 🔹 Listener klik baris
         tableBuku.getSelectionModel().selectedItemProperty().addListener(
@@ -34,6 +39,7 @@ public class BukuController implements Initializable {
                         penulis.setText(newData.getPenulis());
                         tahun.setText(String.valueOf(newData.getTahun()));
                         halaman.setText(String.valueOf(newData.getHalaman()));
+                        status.setText(newData.getPenulis());
                     }
                 }
         );
@@ -53,7 +59,8 @@ public class BukuController implements Initializable {
                 nama.getText(),
                 penulis.getText(),
                 Integer.parseInt(tahun.getText()),
-                Integer.parseInt(halaman.getText())
+                Integer.parseInt(halaman.getText()),
+                status.getText()
         ));
         tampilBuku();
     }
@@ -64,6 +71,7 @@ public class BukuController implements Initializable {
         penulis.clear();
         tahun.clear();
         halaman.clear();
+        status.clear();
     }
 
     private void showAlert(String title, String message) {
@@ -97,7 +105,8 @@ public class BukuController implements Initializable {
                 nama.getText(),
                 penulis.getText(),
                 Integer.parseInt(tahun.getText()),
-                Integer.parseInt(halaman.getText())
+                Integer.parseInt(halaman.getText()),
+                status.getText()
         ));
         tampilBuku();
     }

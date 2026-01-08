@@ -1,5 +1,6 @@
 package controller;
 
+import database.PetugasDatabase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,46 +14,38 @@ import java.util.ResourceBundle;
 
 public class PetugasController implements Initializable {
 
+    // ===== FORM =====
     @FXML private TextField idUser;
     @FXML private TextField nama;
     @FXML private TextField telepon;
     @FXML private ComboBox<String> shift;
 
+    // ===== TABLE =====
     @FXML private TableView<Petugas> tablePetugas;
     @FXML private TableColumn<Petugas, String> colIdUser;
     @FXML private TableColumn<Petugas, String> colNama;
     @FXML private TableColumn<Petugas, String> colTelepon;
     @FXML private TableColumn<Petugas, String> colShift;
 
-    private final ObservableList<Petugas> listPetugas =
-            FXCollections.observableArrayList();
+    private ObservableList<Petugas> listPetugas;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        PetugasDatabase.createTable();
+        PetugasDatabase.seedData();
+        // ComboBox Shift
         shift.getItems().addAll("Pagi", "Siang", "Malam");
 
+        // Mapping kolom tabel
         colIdUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colTelepon.setCellValueFactory(new PropertyValueFactory<>("telepon"));
         colShift.setCellValueFactory(new PropertyValueFactory<>("shift"));
 
-        listPetugas.addAll(
-                new Petugas("P001", "Andi", "0811111111", "Pagi"),
-                new Petugas("P002", "Budi", "0822222222", "Siang"),
-                new Petugas("P003", "Citra", "0833333333", "Malam"),
-                new Petugas("P004", "Dewi", "0844444444", "Pagi"),
-                new Petugas("P005", "Eko", "0855555555", "Siang"),
-                new Petugas("P006", "Fajar", "0866666666", "Malam"),
-                new Petugas("P007", "Gita", "0877777777", "Pagi"),
-                new Petugas("P008", "Hadi", "0888888888", "Siang"),
-                new Petugas("P009", "Indah", "0899999999", "Malam"),
-                new Petugas("P010", "Joko", "0810000000", "Pagi")
-        );
+        // Load data dari database
+        loadData();
 
-        tablePetugas.setItems(listPetugas);
-
-        // klik tabel → isi form
+        // Klik tabel → isi form
         tablePetugas.setOnMouseClicked(e -> {
             Petugas p = tablePetugas.getSelectionModel().getSelectedItem();
             if (p != null) {
@@ -60,45 +53,99 @@ public class PetugasController implements Initializable {
                 nama.setText(p.getNama());
                 telepon.setText(p.getTelepon());
                 shift.setValue(p.getShift());
+                idUser.setDisable(true); // ID tidak boleh diubah
             }
         });
     }
 
+    // ===== LOAD DATA =====
+    private void loadData() {
+        listPetugas = FXCollections.observableArrayList(PetugasDatabase.getAll());
+        tablePetugas.setItems(listPetugas);
+    }
+
+    // ===== SIMPAN =====
     @FXML
     private void handleSimpan() {
-        listPetugas.add(new Petugas(
-                idUser.getText(),
-                nama.getText(),
-                telepon.getText(),
-                shift.getValue()
-        ));
-        clearForm();
+        if (validasi()) {
+            Petugas p = new Petugas(
+                    idUser.getText(),
+                    nama.getText(),
+                    telepon.getText(),
+                    shift.getValue()
+            );
+
+            PetugasDatabase.insert(p);
+            listPetugas.add(p);
+
+            alert("Sukses", "Data petugas berhasil disimpan");
+            clearForm();
+        }
     }
 
-    @FXML
-    private void handleHapus() {
-        listPetugas.removeIf(p -> p.getIdUser().equals(idUser.getText()));
-        clearForm();
-    }
-
+    // ===== UBAH =====
     @FXML
     private void handleUbah() {
-        for (Petugas p : listPetugas) {
-            if (p.getIdUser().equals(idUser.getText())) {
-                p.setNama(nama.getText());
-                p.setTelepon(telepon.getText());
-                p.setShift(shift.getValue());
-                tablePetugas.refresh();
-                break;
-            }
+        if (validasi()) {
+            Petugas p = new Petugas(
+                    idUser.getText(),
+                    nama.getText(),
+                    telepon.getText(),
+                    shift.getValue()
+            );
+
+            PetugasDatabase.update(p);
+            loadData();
+
+            alert("Sukses", "Data petugas berhasil diubah");
+            clearForm();
         }
+    }
+
+    // ===== HAPUS =====
+    @FXML
+    private void handleHapus() {
+        if (idUser.getText().isEmpty()) {
+            alert("Peringatan", "Pilih data terlebih dahulu!");
+            return;
+        }
+
+        PetugasDatabase.delete(idUser.getText());
+        loadData();
+
+        alert("Sukses", "Data petugas berhasil dihapus");
         clearForm();
     }
 
+    // ===== CLEAR FORM =====
     private void clearForm() {
         idUser.clear();
         nama.clear();
         telepon.clear();
         shift.setValue(null);
+        idUser.setDisable(false);
+        tablePetugas.getSelectionModel().clearSelection();
+    }
+
+    // ===== VALIDASI =====
+    private boolean validasi() {
+        if (idUser.getText().isEmpty() ||
+                nama.getText().isEmpty() ||
+                telepon.getText().isEmpty() ||
+                shift.getValue() == null) {
+
+            alert("Peringatan", "Semua field wajib diisi!");
+            return false;
+        }
+        return true;
+    }
+
+    // ===== ALERT =====
+    private void alert(String judul, String pesan) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle(judul);
+        a.setHeaderText(null);
+        a.setContentText(pesan);
+        a.showAndWait();
     }
 }

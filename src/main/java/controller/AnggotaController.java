@@ -12,9 +12,9 @@ import java.util.ResourceBundle;
 
 public class AnggotaController implements Initializable {
 
-    @FXML private TextField idUser, nama, telepon, jurusan;
+    @FXML private TextField idUser, nama, telepon, jurusan,kelas;
     @FXML private TableView<Anggota> tableAnggota;
-    @FXML private TableColumn<Anggota, String> colIdUser, colNama, colTelepon, colJurusan;
+    @FXML private TableColumn<Anggota, String> colIdUser, colNama, colTelepon, colJurusan, colKelas ;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -25,6 +25,8 @@ public class AnggotaController implements Initializable {
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colTelepon.setCellValueFactory(new PropertyValueFactory<>("telepon"));
         colJurusan.setCellValueFactory(new PropertyValueFactory<>("jurusan"));
+        colKelas.setCellValueFactory(new PropertyValueFactory<>("kelas"));
+
 
         tableAnggota.getSelectionModel().selectedItemProperty().addListener(
                 (obs, o, a) -> {
@@ -33,6 +35,8 @@ public class AnggotaController implements Initializable {
                         nama.setText(a.getNama());
                         telepon.setText(a.getTelepon());
                         jurusan.setText(a.getJurusan());
+                        kelas.setText(a.getKelas());
+
                     }
                 }
         );
@@ -50,8 +54,10 @@ public class AnggotaController implements Initializable {
                 idUser.getText(),
                 nama.getText(),
                 telepon.getText(),
-                jurusan.getText()
+                jurusan.getText(),
+                kelas.getText()
         ));
+
         tampilAnggota();
         clearForm();
     }
@@ -72,8 +78,10 @@ public class AnggotaController implements Initializable {
                 idUser.getText(),
                 nama.getText(),
                 telepon.getText(),
-                jurusan.getText()
+                jurusan.getText(),
+                kelas.getText()
         ));
+
         tampilAnggota();
         clearForm();
     }
@@ -83,5 +91,7 @@ public class AnggotaController implements Initializable {
         nama.clear();
         telepon.clear();
         jurusan.clear();
+        kelas.clear();
+
     }
 }

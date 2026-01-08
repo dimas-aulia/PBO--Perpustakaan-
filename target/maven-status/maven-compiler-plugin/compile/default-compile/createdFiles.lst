@@ -6,12 +6,15 @@ app\Main.class
 database\AnggotaDatabase.class
 controller\LoginController.class
 database\BukuDatabase.class
+database\PetugasDatabase.class
 controller\BukuController.class
+database\TransaksiDatabase.class
+controller\TransaksiController.class
 modul\Buku.class
 modul\PenggunaPerpustakaan.class
 app\Koneksi.class
 controller\DaftarBukuController.class
-modul\DaftarPustaka.class
+modul\Transaksi.class
 modul\Petugas.class
 controller\AnggotaController.class
 database\DaftarBukuDatabase.class

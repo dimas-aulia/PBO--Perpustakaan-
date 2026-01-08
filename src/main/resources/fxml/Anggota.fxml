@@ -15,6 +15,7 @@
             <Label text="NAMA"/>
             <Label text="TELEPON"/>
             <Label text="JURUSAN"/>
+            <Label text="KELAS"/>
         </VBox>
 
         <VBox layoutX="140" layoutY="36" spacing="10">
@@ -22,6 +23,7 @@
             <TextField fx:id="nama"/>
             <TextField fx:id="telepon"/>
             <TextField fx:id="jurusan"/>
+            <TextField fx:id="kelas"/>
         </VBox>
 
         <TableView fx:id="tableAnggota" layoutX="330" layoutY="25"
@@ -31,6 +33,8 @@
                 <TableColumn fx:id="colNama" text="NAMA"/>
                 <TableColumn fx:id="colTelepon" text="TELEPON"/>
                 <TableColumn fx:id="colJurusan" text="JURUSAN"/>
+                <TableColumn fx:id="colKelas" text="KELAS"/>
+
             </columns>
         </TableView>
 

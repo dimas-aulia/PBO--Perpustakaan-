@@ -1,6 +1,6 @@
 package app;
 
-import database.BukuDatabase;
+import database.TransaksiDatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,18 +11,12 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        BukuDatabase.createTable();
-        BukuDatabase.seedData();
+        TransaksiDatabase.createTable();
 
         Scene scene = new Scene(
                 FXMLLoader.load(
                         getClass().getResource("/fxml/Login.fxml")
                 )
-        );
-
-        // CSS global
-        scene.getStylesheets().add(
-                getClass().getResource("/css/style.css").toExternalForm()
         );
 
         stage.setTitle("Login Perpustakaan");
