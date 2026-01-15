@@ -8,7 +8,7 @@ import java.sql.*;
 
 
 public class DaftarBukuDatabase {
-
+//mencari buku
     public static ObservableList<Buku> search(String query) {
         ObservableList<Buku> list = FXCollections.observableArrayList();
         // Mencari berdasarkan nama atau penulis
@@ -38,7 +38,7 @@ public class DaftarBukuDatabase {
         }
         return list;
     }
-
+//mengambil data buku
     public static ObservableList<Buku> getAll() {
         ObservableList<Buku> list = FXCollections.observableArrayList();
         String sql = "SELECT * FROM buku";

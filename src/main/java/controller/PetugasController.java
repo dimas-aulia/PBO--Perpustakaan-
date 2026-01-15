@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 public class PetugasController implements Initializable {
 
-    // ===== FORM =====
+
     @FXML private TextField idUser;
     @FXML private TextField nama;
     @FXML private TextField telepon;
@@ -32,19 +32,15 @@ public class PetugasController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         PetugasDatabase.createTable();
-        // ComboBox Shift
         shift.getItems().addAll("Pagi", "Siang", "Malam");
 
-        // Mapping kolom tabel
         colIdUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colTelepon.setCellValueFactory(new PropertyValueFactory<>("telepon"));
         colShift.setCellValueFactory(new PropertyValueFactory<>("shift"));
 
-        // Load data dari database
         loadData();
 
-        // Klik tabel → isi form
         tablePetugas.setOnMouseClicked(e -> {
             Petugas p = tablePetugas.getSelectionModel().getSelectedItem();
             if (p != null) {
@@ -62,7 +58,7 @@ public class PetugasController implements Initializable {
         tablePetugas.setItems(listPetugas);
     }
 
-    // ===== SIMPAN =====
+
     @FXML
     private void handleSimpan() {
         if (validasi()) {
@@ -81,7 +77,6 @@ public class PetugasController implements Initializable {
         }
     }
 
-    // ===== UBAH =====
     @FXML
     private void handleUbah() {
         if (validasi()) {
@@ -100,7 +95,7 @@ public class PetugasController implements Initializable {
         }
     }
 
-    // ===== HAPUS =====
+
     @FXML
     private void handleHapus() {
         if (idUser.getText().isEmpty()) {
@@ -115,7 +110,7 @@ public class PetugasController implements Initializable {
         clearForm();
     }
 
-    // ===== CLEAR FORM =====
+
     private void clearForm() {
         idUser.clear();
         nama.clear();
@@ -125,7 +120,6 @@ public class PetugasController implements Initializable {
         tablePetugas.getSelectionModel().clearSelection();
     }
 
-    // ===== VALIDASI =====
     private boolean validasi() {
         if (idUser.getText().isEmpty() ||
                 nama.getText().isEmpty() ||

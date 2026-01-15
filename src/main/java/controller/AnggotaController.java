@@ -8,14 +8,14 @@ import modul.Anggota;
 
 public class AnggotaController {
 
-    // TextField disesuaikan dengan fx:id di XML Anda
+
     @FXML private TextField idUser;
     @FXML private TextField nama;
     @FXML private TextField telepon;
     @FXML private TextField jurusan;
     @FXML private TextField kelas;
 
-    // Table dan Column disesuaikan dengan fx:id di XML Anda
+
     @FXML private TableView<Anggota> tableAnggota;
     @FXML private TableColumn<Anggota, String> colIdUser;
     @FXML private TableColumn<Anggota, String> colNama;
@@ -25,7 +25,7 @@ public class AnggotaController {
 
     @FXML
     public void initialize() {
-        // Inisialisasi Tabel
+        //Menghubungkan kolom tabel dengan properti Buku
         colIdUser.setCellValueFactory(new PropertyValueFactory<>("idUser"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colTelepon.setCellValueFactory(new PropertyValueFactory<>("telepon"));
@@ -34,7 +34,6 @@ public class AnggotaController {
 
         loadData();
 
-        // Listener untuk memilih data dari tabel (otomatis masuk ke TextField)
         tableAnggota.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 idUser.setText(newVal.getIdUser());
@@ -42,7 +41,6 @@ public class AnggotaController {
                 telepon.setText(newVal.getTelepon());
                 jurusan.setText(newVal.getJurusan());
                 kelas.setText(newVal.getKelas());
-                idUser.setEditable(false); // ID biasanya tidak boleh diubah saat mode UBAH
             }
         });
     }

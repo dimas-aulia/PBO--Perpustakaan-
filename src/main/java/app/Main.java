@@ -1,6 +1,5 @@
 package app;
 
-import database.TransaksiDatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,9 +9,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
-
-
+        //memulai aplikasi dan mindahakn kehalaman login
         Scene scene = new Scene(
                 FXMLLoader.load(
                         getClass().getResource("/fxml/Login.fxml")

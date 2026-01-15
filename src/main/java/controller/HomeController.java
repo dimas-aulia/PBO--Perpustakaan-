@@ -26,7 +26,7 @@ public class HomeController {
             e.printStackTrace();
         }
     }
-
+    //memilih menu
     public void openBuku() {
         loadPage("Buku.fxml");
     }
@@ -43,22 +43,22 @@ public class HomeController {
         loadPage("Transaksi.fxml");
     }
 
-    // Method untuk Logout
+    //  untuk logut
     @FXML
     public void handleLogout(ActionEvent event) {
         try {
-            // 1. Tentukan lokasi file Login.fxml
+
             URL loginUrl = getClass().getResource("/fxml/Login.fxml");
 
             if (loginUrl == null) {
                 throw new RuntimeException("File Login.fxml tidak ditemukan di /fxml/");
             }
 
-            // 2. Load root baru
+
             Parent root = FXMLLoader.load(loginUrl);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // 3. Pindah ke Scene Login
+
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("Login");

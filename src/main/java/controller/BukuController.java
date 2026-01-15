@@ -7,12 +7,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import modul.Buku;
 
 public class BukuController {
-    // SESUAIKAN DENGAN FXML ANDA
-    @FXML private TextField id;      // fx:id="id"
-    @FXML private TextField nama;    // fx:id="nama"
-    @FXML private TextField penulis; // fx:id="penulis"
-    @FXML private TextField tahun;   // fx:id="tahun"
-    @FXML private TextField halaman; // fx:id="halaman"
+
+    @FXML private TextField id;
+    @FXML private TextField nama;
+    @FXML private TextField penulis;
+    @FXML private TextField tahun;
+    @FXML private TextField halaman;
 
     @FXML private TableView<Buku> tableBuku;
     @FXML private TableColumn<Buku, String> colId, colNama, colPenulis, colStatus;
@@ -21,8 +21,7 @@ public class BukuController {
     @FXML
     public void initialize() {
         BukuDatabase.createTable();
-
-        // Mapping kolom ke properti class Buku
+        //mencocokan fxid dan fxml
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
         colPenulis.setCellValueFactory(new PropertyValueFactory<>("penulis"));
@@ -32,7 +31,6 @@ public class BukuController {
 
         loadData();
 
-        // Fitur Klik Tabel: agar data muncul di TextField saat ingin Ubah/Hapus
         tableBuku.getSelectionModel().selectedItemProperty().addListener((obs, old, val) -> {
             if (val != null) {
                 id.setText(val.getId());

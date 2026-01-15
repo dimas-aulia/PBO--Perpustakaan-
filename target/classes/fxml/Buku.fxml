@@ -13,7 +13,6 @@
 
     <children>
 
-        <!-- LABEL -->
         <VBox layoutX="30" layoutY="30" spacing="20.0">
             <children>
                 <Label lineSpacing="12.0" text="ID BUKU" />

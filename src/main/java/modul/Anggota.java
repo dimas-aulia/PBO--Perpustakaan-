@@ -1,9 +1,9 @@
 package modul;
-
+// mewarisi class pengguna perpustakaan
 public class Anggota extends PenggunaPerpustakaan {
 
     private String jurusan;
-    private String kelas; // TAMBAHAN
+    private String kelas;
 
     public Anggota(String idUser, String nama, String telepon, String jurusan, String kelas) {
         super(idUser, nama, telepon);

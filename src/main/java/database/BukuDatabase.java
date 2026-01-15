@@ -7,7 +7,7 @@ import modul.Buku;
 import java.sql.*;
 
 public class BukuDatabase {
-
+    //membuat table
     public static void createTable() {
         String sql = """
         CREATE TABLE IF NOT EXISTS buku (
@@ -22,7 +22,7 @@ public class BukuDatabase {
             s.execute(sql);
         } catch (SQLException e) { e.printStackTrace(); }
     }
-
+//menambahkan buku
     public static void insert(Buku b) {
         String sql = "INSERT INTO buku (id_buku, nama, penulis, tahun, halaman, status) VALUES (?,?,?,?,?,?)";
         try (Connection c = Koneksi.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
@@ -35,7 +35,7 @@ public class BukuDatabase {
             ps.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }
-
+//mengubah data
     public static void update(Buku b) {
         String sql = "UPDATE buku SET nama=?, penulis=?, tahun=?, halaman=? WHERE id_buku=?";
         try (Connection c = Koneksi.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
@@ -47,7 +47,7 @@ public class BukuDatabase {
             ps.executeUpdate();
         } catch (SQLException e) { e.printStackTrace(); }
     }
-
+//mengupdate status buku
     public static void updateStatus(String idBuku, String statusBaru) {
         String sql = "UPDATE buku SET status = ? WHERE id_buku = ?";
 

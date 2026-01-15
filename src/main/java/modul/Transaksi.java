@@ -3,29 +3,68 @@ package modul;
 import java.time.LocalDate;
 
 public class Transaksi {
+
     private int idTransaksi;
-    private String idUser, namaAnggota, idBuku, judulBuku;
-    private LocalDate tanggalPinjam, tanggalKembali;
+
+    // 🔹 AGREGASI
+    private Anggota anggota;
+    private Buku buku;
+
+    private LocalDate tanggalPinjam;
+    private LocalDate tanggalKembali;
     private int denda;
 
-    public Transaksi(int id, String user, String nama, String buku, String judul, LocalDate p, LocalDate k, int denda) {
-        this.idTransaksi = id;
-        this.idUser = user;
-        this.namaAnggota = nama;
-        this.idBuku = buku;
-        this.judulBuku = judul;
-        this.tanggalPinjam = p;
-        this.tanggalKembali = k;
+    // ASOSIASI
+    private Petugas petugas;
+
+    public Transaksi(int idTransaksi, Anggota anggota, Buku buku,
+                     LocalDate tanggalPinjam, LocalDate tanggalKembali, int denda) {
+
+        this.idTransaksi = idTransaksi;
+        this.anggota = anggota;
+        this.buku = buku;
+        this.tanggalPinjam = tanggalPinjam;
+        this.tanggalKembali = tanggalKembali;
         this.denda = denda;
     }
 
-    // Getters
+    // =====================
+    // GETTER DATABASE
+    // =====================
     public int getIdTransaksi() { return idTransaksi; }
-    public String getIdUser() { return idUser; }
-    public String getNamaAnggota() { return namaAnggota; }
-    public String getIdBuku() { return idBuku; }
-    public String getJudulBuku() { return judulBuku; }
+
+    public String getIdUser() {
+        return anggota.getIdUser(); // dari superclass
+    }
+
+    public String getNamaAnggota() {
+        return anggota.getNama(); // dari superclass
+    }
+
+    public String getIdBuku() {
+        return buku.getId();
+    }
+
+    public String getJudulBuku() {
+        return buku.getNama();
+    }
+
     public LocalDate getTanggalPinjam() { return tanggalPinjam; }
     public LocalDate getTanggalKembali() { return tanggalKembali; }
     public int getDenda() { return denda; }
+
+    // =====================
+    // GETTER OOP
+    // =====================
+    public Anggota getAnggota() { return anggota; }
+    public Buku getBuku() { return buku; }
+
+    public Petugas getPetugas() {
+        return petugas;
+    }
+
+    public void setPetugas(Petugas petugas) {
+        this.petugas = petugas;
+    }
+
 }

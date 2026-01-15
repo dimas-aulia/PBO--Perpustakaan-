@@ -8,7 +8,7 @@ import modul.Anggota;
 import java.sql.*;
 
 public class AnggotaDatabase {
-
+    //membuat table
     public static void createTable() {
         String sql = """
                 CREATE TABLE IF NOT EXISTS anggota (
@@ -28,7 +28,7 @@ public class AnggotaDatabase {
         }
     }
 
-
+   //menambahkan data
     public static void insert(Anggota a) {
         try (Connection c = Koneksi.getConnection();
              PreparedStatement ps =
@@ -46,7 +46,7 @@ public class AnggotaDatabase {
         }
     }
 
-
+//menghapus data
     public static void delete(String id) {
         try (Connection c = Koneksi.getConnection();
              PreparedStatement ps =
@@ -59,7 +59,7 @@ public class AnggotaDatabase {
             System.out.println(e);
         }
     }
-
+//mengupdat atau mengubah data
     public static void update(Anggota a) {
         try (Connection c = Koneksi.getConnection();
              PreparedStatement ps =
@@ -78,7 +78,7 @@ public class AnggotaDatabase {
         }
     }
 
-
+//mengambil data buku
     public static ObservableList<Anggota> getAll() {
         ObservableList<Anggota> list = FXCollections.observableArrayList();
         try (Connection c = Koneksi.getConnection();

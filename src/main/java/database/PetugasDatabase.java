@@ -9,7 +9,6 @@ import java.sql.*;
 
 public class PetugasDatabase {
 
-    // ===== BUAT TABEL =====
     public static void createTable() {
         String sql = """
         CREATE TABLE IF NOT EXISTS petugas (
@@ -29,8 +28,6 @@ public class PetugasDatabase {
     }
 
 
-
-    // ===== INSERT =====
     public static void insert(Petugas p) {
         try (Connection c = Koneksi.getConnection();
              PreparedStatement ps =
@@ -47,7 +44,6 @@ public class PetugasDatabase {
         }
     }
 
-    // ===== DELETE =====
     public static void delete(String id) {
         try (Connection c = Koneksi.getConnection();
              PreparedStatement ps =
@@ -61,7 +57,6 @@ public class PetugasDatabase {
         }
     }
 
-    // ===== UPDATE =====
     public static void update(Petugas p) {
         try (Connection c = Koneksi.getConnection();
              PreparedStatement ps =
@@ -79,7 +74,6 @@ public class PetugasDatabase {
         }
     }
 
-    // ===== READ =====
     public static ObservableList<Petugas> getAll() {
         ObservableList<Petugas> list = FXCollections.observableArrayList();
         try (Connection c = Koneksi.getConnection();

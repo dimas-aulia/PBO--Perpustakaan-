@@ -5,15 +5,15 @@ public class Buku {
     private String nama;
     private String penulis;
     private int tahun;
-    private int halaman;
+    private Halaman halaman;   // KOMPOSISI hngan ubutidak bisa berdiri sendri
     private String status;
 
-    public Buku(String id, String nama, String penulis, int tahun, int halaman, String status) {
+    public Buku(String id, String nama, String penulis, int tahun, int jumlahHalaman, String status) {
         this.id = id;
         this.nama = nama;
         this.penulis = penulis;
         this.tahun = tahun;
-        this.halaman = halaman;
+        this.halaman = new Halaman(jumlahHalaman); //  dibuat di dalam Buku
         this.status = status;
     }
 
@@ -21,6 +21,11 @@ public class Buku {
     public String getNama() { return nama; }
     public String getPenulis() { return penulis; }
     public int getTahun() { return tahun; }
-    public int getHalaman() { return halaman; }
+
+    // 👉 Tetap kompatibel dengan Database
+    public int getHalaman() {
+        return halaman.getJumlahHalaman();
+    }
+
     public String getStatus() { return status; }
 }

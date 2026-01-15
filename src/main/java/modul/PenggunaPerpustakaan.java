@@ -16,7 +16,7 @@ public abstract class PenggunaPerpustakaan {
     public String getNama() { return nama; }
     public String getTelepon() { return telepon; }
 
-    public abstract void tampilkanPeran();
+    public abstract void tampilkanPeran(); //absatact class
 
     public void tampilkanInfo() {
         System.out.println(idUser + " | " + nama + " | " + telepon);

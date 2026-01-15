@@ -32,10 +32,10 @@ public class DaftarBukuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Tampilkan semua buku saat startup
+        // Tampilkan semua buku
         renderBuku(DaftarBukuDatabase.getAll());
     }
-
+//menacri buku
     @FXML
     private void handleSearch() {
         String query = txtSearch.getText();
@@ -48,14 +48,12 @@ public class DaftarBukuController implements Initializable {
         ObservableList<Buku> hasilPencarian = DaftarBukuDatabase.search(query);
 
         if (hasilPencarian.isEmpty()) {
-            // ALERT: Jika buku tidak ditemukan
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Informasi");
             alert.setHeaderText(null);
             alert.setContentText("Buku dengan judul '" + query + "' tidak terdaftar dalam database.");
             alert.showAndWait();
 
-            // Kembalikan ke daftar awal setelah alert ditutup
             renderBuku(DaftarBukuDatabase.getAll());
         } else {
             renderBuku(hasilPencarian);
@@ -66,27 +64,23 @@ public class DaftarBukuController implements Initializable {
         bukuContainer.getChildren().clear();
 
         for (Buku buku : daftarBuku) {
-            // 1. Gambar Buku
+
             ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/images/buku.jpg")));
             img.setFitWidth(150);
             img.setFitHeight(200);
             img.setPreserveRatio(true);
 
-            // 2. KODE BUKU (Dikembalikan)
             Label lblKode = new Label("KODE: " + buku.getId());
             lblKode.setStyle("-fx-font-weight: bold; -fx-text-fill: #00796B; -fx-font-size: 11px;");
 
-            // 3. TEXT STATIS "Judul Buku"
             Label lblStatik = new Label("Judul Buku");
             lblStatik.setStyle("-fx-font-size: 11px; -fx-text-fill: #95a5a6; -fx-text-transform: uppercase;");
 
-            // 4. JUDUL BUKU (Besar & Wrap)
             Text txtJudul = new Text(buku.getNama());
             txtJudul.setWrappingWidth(240);
             txtJudul.setTextAlignment(TextAlignment.CENTER);
             txtJudul.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #2C3E50;");
 
-            // 5. PENULIS
             Label lblPenulis = new Label("Penulis: " + buku.getPenulis());
             lblPenulis.setStyle("-fx-font-size: 13px; -fx-text-fill: #7F8C8D; -fx-font-style: italic;");
 
@@ -100,7 +94,6 @@ public class DaftarBukuController implements Initializable {
             }
 
 
-            // --- KONTINER KARTU ---
             VBox card = new VBox(10, img, lblKode, lblStatik, txtJudul, lblPenulis,txtStatus);
 
             card.setAlignment(Pos.TOP_CENTER);

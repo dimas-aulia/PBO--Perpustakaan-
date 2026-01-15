@@ -13,7 +13,7 @@
 
     <children>
 
-        <!-- LABEL -->
+
         <VBox layoutX="34.0" layoutY="41.0" spacing="13.0">
             <children>
                 <Label text="ID PETUGAS" />
@@ -23,7 +23,7 @@
             </children>
         </VBox>
 
-        <!-- INPUT -->
+
         <VBox layoutX="132.0" layoutY="37.0" spacing="5.0">
             <children>
                 <TextField fx:id="idUser" prefHeight="34.0" prefWidth="180.0" />
@@ -33,7 +33,6 @@
             </children>
         </VBox>
 
-        <!-- TABLE -->
         <TableView fx:id="tablePetugas" layoutX="333.0" layoutY="27.0" prefHeight="347.0" prefWidth="480.0">
 
             <columns>
@@ -44,7 +43,6 @@
             </columns>
         </TableView>
 
-        <!-- BUTTON -->
         <Button layoutX="41.0" layoutY="208.0" onAction="#handleSimpan" text="SIMPAN" />
 
         <Button layoutX="121.0" layoutY="208.0" onAction="#handleHapus" text="HAPUS" />

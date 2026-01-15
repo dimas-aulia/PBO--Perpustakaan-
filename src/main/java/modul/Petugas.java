@@ -6,18 +6,18 @@ public class Petugas extends PenggunaPerpustakaan {
     private String shift;
 
     public Petugas(String idUser, String nama, String telepon, String shift) {
-        // Mengirimkan data ke constructor superclass (PenggunaPerpustakaan)
+
         super(idUser, nama, telepon);
         this.shift = shift;
     }
 
-    // Implementasi wajib dari method abstract induk
+    //polimorfisem, memliki lain method ,overiding mendfinisikan ulang dari suer class
     @Override
     public void tampilkanPeran() {
-        System.out.println("Peran: Petugas Perpustakaan - Shift: " + shift);
+        System.out.println("Peran: Petugas Perpustakaan - Shift: " +  shift);
     }
 
-    // Getter dan Setter khusus untuk Petugas
+
     public String getShift() {
         return shift;
     }
@@ -26,5 +26,5 @@ public class Petugas extends PenggunaPerpustakaan {
         this.shift = shift;
     }
 
-    // Catatan: Getter idUser, nama, dan telepon sudah ada di class induk
+
 }
